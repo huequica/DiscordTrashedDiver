@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "esbuild --bundle --outdir=dist --minify --format=cjs --platform=node src/index.ts"
+    "build": "esbuild --bundle --outdir=dist --platform=node src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
