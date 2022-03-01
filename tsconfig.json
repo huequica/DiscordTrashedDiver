@@ -12,7 +12,10 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": [
+      "@types/jest"
+    ]
   },
   "include": [
     "src/**/*"
