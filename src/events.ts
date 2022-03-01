@@ -10,5 +10,9 @@ export const subscribeEvents = (client: Client): Client => {
     console.log('start discord bot service!');
   });
 
+  client.on('messageReactionAdd', (reaction) => {
+    console.log(reaction.emoji.name);
+  });
+
   return client;
 };
