@@ -1,4 +1,5 @@
-import { Client } from 'discord.js';
+import { Client, MessageReaction } from 'discord.js';
+import { leakMessage } from '@/actions/leakMessage';
 
 /**
  * イベントを登録していくための空間
@@ -11,7 +12,8 @@ export const subscribeEvents = (client: Client): Client => {
   });
 
   client.on('messageReactionAdd', (reaction) => {
-    console.log(reaction.emoji.name);
+    if (!(reaction instanceof MessageReaction)) return;
+    leakMessage(reaction);
   });
 
   return client;
