@@ -1,8 +1,9 @@
-import { Channel, TextChannel } from 'discord.js';
+import { TextBasedChannel, TextChannel } from 'discord.js';
 
 /**
  * `channel instanceof TextChannel` の wrapper
- * @param channel 正体不明のチャンネルオブジェクト
+ * @param channel 正体不明のチャンネルオブジェクト. `reaction.message.channel` から取る
  */
-export const isTextChannel = (channel: Channel): channel is TextChannel =>
-  channel instanceof TextChannel;
+export const isTextChannel = (
+  channel: TextBasedChannel
+): channel is TextChannel => channel instanceof TextChannel;
