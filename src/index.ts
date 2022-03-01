@@ -1,11 +1,9 @@
-import { Client, Intents } from 'discord.js';
-import { DISCORD_TOKEN } from './config/env';
+import { Client } from 'discord.js';
+import { DISCORD_TOKEN, intents } from './config/env';
 import { subscribeEvents } from './events';
 
 const main = async () => {
-  const client = subscribeEvents(
-    new Client({ intents: [Intents.FLAGS.GUILDS] })
-  );
+  const client = subscribeEvents(new Client({ intents }));
 
   await client.login(DISCORD_TOKEN);
 };
