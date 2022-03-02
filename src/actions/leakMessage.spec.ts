@@ -33,7 +33,9 @@ describe('🚓 leakMessage', () => {
     } as unknown as MessageReaction;
 
     leakMessage(reactionMock);
-    expect(reactionMock.message.reply).toHaveBeenCalledWith('補足したぞ');
+    expect(reactionMock.message.reply).toHaveBeenCalledWith(
+      '補足してませ〜〜〜ん'
+    );
   });
 
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
