@@ -6,7 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "esbuild --bundle --outdir=dist --platform=node src/index.ts"
+    "build": "esbuild --bundle --outdir=dist --platform=node src/index.ts",
+    "typeCheck": "tsc --noEmit",
+    "lint": "eslint --ext .js,.ts src",
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
