@@ -1,4 +1,4 @@
-name: typeCheck
+name: lint
 on:
   pull_request:
     paths:
