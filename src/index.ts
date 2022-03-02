@@ -1,5 +1,5 @@
 import { Client } from 'discord.js';
-import { DISCORD_TOKEN, intents } from '@/config/env';
+import { DISCORD_TOKEN, intents, TWITTER_TOKENS } from '@/config/env';
 import { subscribeEvents } from '@/events';
 
 const main = async () => {
@@ -9,4 +9,5 @@ const main = async () => {
 };
 
 if (!DISCORD_TOKEN) throw new Error('DISCORD_TOKEN not found in .env File!');
+TWITTER_TOKENS();
 main();
