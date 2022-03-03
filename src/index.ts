@@ -2,12 +2,12 @@ import { Client } from 'discord.js';
 import { DISCORD_TOKEN, intents, TWITTER_TOKENS } from '@/config/env';
 import { subscribeEvents } from '@/events';
 
-const main = async () => {
+const main = async (discordToken: string) => {
   const client = subscribeEvents(new Client({ intents }));
 
-  await client.login(DISCORD_TOKEN);
+  await client.login(discordToken);
 };
 
-if (!DISCORD_TOKEN) throw new Error('DISCORD_TOKEN not found in .env File!');
-TWITTER_TOKENS();
-main();
+const discordToken = DISCORD_TOKEN();
+TWITTER_TOKENS(); // 今後使うので先に実行だけしてエラーを起こさないかチェック
+main(discordToken);
