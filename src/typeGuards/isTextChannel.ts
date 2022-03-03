@@ -1,9 +1,16 @@
-import { TextChannel } from 'discord.js';
+import { MessageReaction, TextChannel } from 'discord.js';
+
+/**
+ * reaction から channel Object を返す
+ * @param reaction イベントから投げられてきたリアクションメッセージ
+ */
+export const getChannelFromReaction = (reaction: MessageReaction) =>
+  reaction.message.channel;
 
 /**
  * `channel instanceof TextChannel` の wrapper
  * @param channel 正体不明のチャンネルオブジェクト. `reaction.message.channel` から取る
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isTextChannel = (channel: any): channel is TextChannel =>
-  typeof channel.name === 'string';
+export const isTextChannel = (
+  channel: ReturnType<typeof getChannelFromReaction>
+): channel is TextChannel => channel.type === 'GUILD_TEXT';

@@ -1,5 +1,8 @@
 import { MessageReaction } from 'discord.js';
-import { isTextChannel } from '@/typeGuards/isTextChannel';
+import {
+  isTextChannel,
+  getChannelFromReaction,
+} from '@/typeGuards/isTextChannel';
 
 interface FilterRules {
   channelName: string;
@@ -21,7 +24,7 @@ export const shouldRunLeak = ({
 
 export const leakMessage = (reaction: MessageReaction) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
-  const channel = reaction.message.channel;
+  const channel = getChannelFromReaction(reaction);
   if (!isTextChannel(channel)) return;
 
   const filters: Parameters<typeof shouldRunLeak>[0] = {
