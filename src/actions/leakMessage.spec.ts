@@ -1,6 +1,8 @@
 import { leakMessage, shouldRunLeak } from '@/actions/leakMessage';
-import { MessageReaction } from 'discord.js';
-import { generateMockMessageReaction } from '@/lib/mocks/messageReaction';
+import {
+  generateMockMessageReaction,
+  GenerateMockMessageReactionOptions,
+} from '@/lib/mocks/messageReaction';
 
 describe('🚓 shouldRunLeak', () => {
   it('👮 channel.name が "ごみばこ" 以外のときは undefined を返す', () => {
@@ -28,18 +30,16 @@ describe('🚓 leakMessage', () => {
   });
 
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
-    const reactionMock = {
-      message: {
-        channel: {
-          type: 'GUILD_TEXT',
-          name: 'general',
-        },
-        reply: jest.fn(),
+    const mockReactionOptions: GenerateMockMessageReactionOptions = {
+      channel: {
+        name: 'general',
       },
       emoji: {
         name: 'troll_face',
       },
-    } as unknown as MessageReaction;
+    };
+
+    const reactionMock = generateMockMessageReaction(mockReactionOptions);
 
     leakMessage(reactionMock);
     expect(reactionMock.message.reply).not.toHaveBeenCalled();
