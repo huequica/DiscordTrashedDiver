@@ -23,6 +23,7 @@ describe('🚓 leakMessage', () => {
     const reactionMock = {
       message: {
         channel: {
+          type: 'GUILD_TEXT',
           name: 'ごみばこ',
         },
         reply: jest.fn(),
@@ -40,6 +41,7 @@ describe('🚓 leakMessage', () => {
     const reactionMock = {
       message: {
         channel: {
+          type: 'GUILD_TEXT',
           name: 'general',
         },
         reply: jest.fn(),
