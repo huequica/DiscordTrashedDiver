@@ -1,5 +1,8 @@
 import { leakMessage, shouldRunLeak } from '@/actions/leakMessage';
-import { MessageReaction } from 'discord.js';
+import {
+  generateMockMessageReaction,
+  GenerateMockMessageReactionOptions,
+} from '@/lib/mocks/messageReaction';
 
 describe('🚓 shouldRunLeak', () => {
   it('👮 channel.name が "ごみばこ" 以外のときは undefined を返す', () => {
@@ -20,40 +23,23 @@ describe('🚓 shouldRunLeak', () => {
 
 describe('🚓 leakMessage', () => {
   it('👮 フィルターを通った場合は reaction.reply.message が発火する', () => {
-    const reactionMock = {
-      message: {
-        channel: {
-          type: 'GUILD_TEXT',
-          name: 'ごみばこ',
-        },
-        reply: jest.fn(),
-      },
-      emoji: {
-        name: 'troll_face',
-        // モックで適当に toString をオーバーライドして返却値を設定
-        toString() {
-          return `:${this.name}:`;
-        },
-      },
-    } as unknown as MessageReaction;
+    const reactionMock = generateMockMessageReaction();
 
     leakMessage(reactionMock);
     expect(reactionMock.message.reply).toHaveBeenCalledWith(':troll_face:');
   });
 
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
-    const reactionMock = {
-      message: {
-        channel: {
-          type: 'GUILD_TEXT',
-          name: 'general',
-        },
-        reply: jest.fn(),
+    const mockReactionOptions: GenerateMockMessageReactionOptions = {
+      channel: {
+        name: 'general',
       },
       emoji: {
         name: 'troll_face',
       },
-    } as unknown as MessageReaction;
+    };
+
+    const reactionMock = generateMockMessageReaction(mockReactionOptions);
 
     leakMessage(reactionMock);
     expect(reactionMock.message.reply).not.toHaveBeenCalled();
