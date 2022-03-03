@@ -30,11 +30,15 @@ describe('🚓 leakMessage', () => {
       },
       emoji: {
         name: 'troll_face',
+        // モックで適当に toString をオーバーライドして返却値を設定
+        toString() {
+          return `:${this.name}:`;
+        },
       },
     } as unknown as MessageReaction;
 
     leakMessage(reactionMock);
-    expect(reactionMock.message.reply).toHaveBeenCalledWith('補足したぞ');
+    expect(reactionMock.message.reply).toHaveBeenCalledWith(':troll_face:');
   });
 
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {

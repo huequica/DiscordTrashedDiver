@@ -33,5 +33,6 @@ export const leakMessage = (reaction: MessageReaction) => {
   };
 
   if (!shouldRunLeak(filters)) return;
-  reaction.message.reply('補足したぞ');
+
+  reaction.message.reply(reaction.emoji.toString());
 };
