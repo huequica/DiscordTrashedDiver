@@ -1,7 +1,12 @@
 import 'dotenv/config';
 import { Intents } from 'discord.js';
 
-export const DISCORD_TOKEN = process.env.DISCORD_TOKEN || '';
+export const DISCORD_TOKEN = (): string => {
+  const env = process.env.DISCORD_TOKEN;
+  if (!env) throw Error('DISCORD_TOKEN not found in .env File!');
+  return env;
+};
+
 export const intents = [
   Intents.FLAGS.GUILDS,
   Intents.FLAGS.GUILD_MESSAGES,
