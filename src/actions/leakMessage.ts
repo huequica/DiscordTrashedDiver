@@ -24,7 +24,7 @@ export const leakMessage = (reaction: MessageReaction) => {
   const channel = reaction.message.channel;
   if (!isTextChannel(channel)) return;
 
-  const filters = {
+  const filters: Parameters<typeof shouldRunLeak>[0] = {
     channelName: channel.name,
     emojiName: reaction.emoji.name || '',
   };
