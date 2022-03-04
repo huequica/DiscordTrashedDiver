@@ -1,18 +1,18 @@
-import { TwitterClient } from 'twitter-api-client';
+import Twitter from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
 
 /**
- * Twitter への投稿を
+ * Twitter への投稿を管轄する repository
  */
 export class TwitterRepository {
-  private client: TwitterClient;
+  private client: Twitter;
 
   constructor(keys: ReturnType<typeof TWITTER_TOKENS>) {
-    this.client = new TwitterClient({
-      apiKey: keys.consumer.key,
-      apiSecret: keys.consumer.secret,
+    this.client = new Twitter({
+      appKey: keys.consumer.key,
+      appSecret: keys.consumer.secret,
       accessToken: keys.account.key,
-      accessTokenSecret: keys.account.secret,
+      accessSecret: keys.account.secret,
     });
   }
 
@@ -22,6 +22,6 @@ export class TwitterRepository {
    * @param content ツイート文面
    */
   async postTweet(content: string) {
-    return this.client.tweets.statusesUpdate({ status: content });
+    return this.client.v1.tweet(content);
   }
 }
