@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "twitter-api-v2": "^1.11.0"
   }
 }
