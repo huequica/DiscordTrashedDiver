@@ -3,7 +3,7 @@ import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
 import { TwitterRepository } from '@/lib/repositories/twitter';
 import { TWITTER_TOKENS } from '@/config/env';
 import {
-  NetworkHandshake,
+  NetworkHandshakeException,
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
@@ -31,7 +31,7 @@ export class TwitterService {
     } catch (error: unknown) {
       // シンプルに疎通ができなかったなどのエラー
       if (error instanceof ApiRequestError) {
-        throw new NetworkHandshake();
+        throw new NetworkHandshakeException();
       }
       // twitter から エラーのレスポンスが返却されたなどのエラー
 
