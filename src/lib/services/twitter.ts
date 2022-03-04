@@ -33,8 +33,8 @@ export class TwitterService {
       if (error instanceof ApiRequestError) {
         throw new NetworkHandshakeException();
       }
-      // twitter から エラーのレスポンスが返却されたなどのエラー
 
+      // twitter から エラーのレスポンスが返却されたなどのエラー
       if (error instanceof ApiResponseError) {
         switch (error.code) {
           case 401:
