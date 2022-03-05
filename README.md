@@ -20,5 +20,5 @@
 1. `$ git clone https://github.com/huequica/DiscordTrashedDiver.git`
 2. `yarn` で依存を落としてくる
 3. `yarn build` で ビルドしたファイルが出来る
-4. `.env.template` に各種情報を追記して `.env` にリネーム
+4. `.env.template` をコピペして `.env` を作り、各種情報を追記する
 5. `node index.js` で実行
