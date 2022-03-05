@@ -13,7 +13,14 @@ import {
   getChannelFromReaction,
 } from '@/typeGuards/isTextChannel';
 
-export const leakMessage = async (reaction: MessageReaction) => {
+interface Services {
+  twitter: TwitterService;
+}
+
+export const leakMessage = async (
+  reaction: MessageReaction,
+  services?: Services
+) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = getChannelFromReaction(reaction);
   if (!isTextChannel(channel)) return;
@@ -26,7 +33,7 @@ export const leakMessage = async (reaction: MessageReaction) => {
   if (!shouldRunLeak(filters)) return;
 
   try {
-    const twitterService = new TwitterService();
+    const twitterService = services?.twitter || new TwitterService();
     const messageContent = reaction.message.content;
     if (!messageContent) return;
 
