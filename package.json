@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "esbuild --bundle --outdir=dist --platform=node src/index.ts",
+    "build": "yarn typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
     "typeCheck": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts src",
     "test": "jest"
