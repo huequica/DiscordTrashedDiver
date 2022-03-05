@@ -6,15 +6,13 @@ import {
 import { TwitterService } from '@/lib/services/twitter';
 import { TwitterRepository } from '@/lib/repositories/twitter';
 import { mockTwitterTokens } from '@/lib/mocks/env';
+import {
+  NetworkHandshakeException,
+  ServerErrorException,
+  UnauthorizedException,
+} from '@/lib/exceptions';
 
 describe('🚓 leakMessage', () => {
-  it('👮 フィルターを通った場合は reaction.reply.message が発火する', () => {
-    const reactionMock = generateMockMessageReaction();
-
-    leakMessage(reactionMock);
-    expect(reactionMock.message.reply).toHaveBeenCalledWith(':troll_face:');
-  });
-
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
     const mockReactionOptions: GenerateMockMessageReactionOptions = {
       channel: {
@@ -56,6 +54,79 @@ describe('🚓 leakMessage', () => {
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
         `:boomerang: ${tweetURL}`
+      );
+    });
+  });
+
+  describe('🆖 REJECTED', () => {
+    it('👮 NetworkHandshakeException が帰ってきたらその問題を通知', async () => {
+      const twitterRepository = new TwitterRepository(mockTwitterTokens);
+      const twitterService = new TwitterService(twitterRepository);
+
+      twitterService.postTweet = jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.reject(new NetworkHandshakeException())
+        );
+
+      const reactionMock = generateMockMessageReaction();
+      await leakMessage(reactionMock, { twitter: twitterService });
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(
+        `${reactionMock.emoji} < ネットワークの接続で問題が発生したぽいで`
+      );
+    });
+
+    it('👮 UnauthorizedException が帰ってきたらその問題を通知', async () => {
+      const twitterRepository = new TwitterRepository(mockTwitterTokens);
+      const twitterService = new TwitterService(twitterRepository);
+
+      twitterService.postTweet = jest
+        .fn()
+        .mockImplementation(() => Promise.reject(new UnauthorizedException()));
+
+      const reactionMock = generateMockMessageReaction();
+      await leakMessage(reactionMock, { twitter: twitterService });
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(
+        `${reactionMock.emoji} < twitter の認証で死んだんだわ`
+      );
+    });
+
+    it('👮 ServerErrorException が帰ってきたらその問題を通知', async () => {
+      const twitterRepository = new TwitterRepository(mockTwitterTokens);
+      const twitterService = new TwitterService(twitterRepository);
+
+      twitterService.postTweet = jest
+        .fn()
+        .mockImplementation(() => Promise.reject(new ServerErrorException()));
+
+      const reactionMock = generateMockMessageReaction();
+      await leakMessage(reactionMock, { twitter: twitterService });
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(
+        `${reactionMock.emoji} < Twitter のサービスが死んでるかもしれん`
+      );
+    });
+
+    it('👮 その他エラー が帰ってきたらエラーメッセージも添付して通知', async () => {
+      const twitterRepository = new TwitterRepository(mockTwitterTokens);
+      const twitterService = new TwitterService(twitterRepository);
+
+      twitterService.postTweet = jest
+        .fn()
+        .mockImplementation(() => Promise.reject(new Error('mockError!')));
+
+      const reactionMock = generateMockMessageReaction();
+      const errorMessage = '```\n' + `mockError!\n` + '```';
+
+      await leakMessage(reactionMock, { twitter: twitterService });
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(
+        `${reactionMock.emoji} < なんか知らんエラーが出たわ`
+      );
+      expect(reactionMock.message.channel.send).toHaveBeenCalledWith(
+        errorMessage
       );
     });
   });
