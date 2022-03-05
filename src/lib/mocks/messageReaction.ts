@@ -45,8 +45,9 @@ export const generateMockMessageReaction = (
       channel: {
         type: options?.channel?.type || 'GUILD_TEXT',
         name: options?.channel?.name || 'ごみばこ',
+        send: jest.fn().mockImplementation(),
       },
-      reply: jest.fn(),
+      reply: jest.fn().mockImplementation(),
     },
     emoji: {
       name: options?.emoji?.name || 'troll_face',
