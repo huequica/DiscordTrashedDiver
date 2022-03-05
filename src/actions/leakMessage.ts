@@ -4,6 +4,8 @@ import {
   isTextChannel,
   getChannelFromReaction,
 } from '@/typeGuards/isTextChannel';
+import { EmojiNotFoundError } from '@/lib/exceptions';
+import { pickEmoji } from '@/actions/utils/pickEmoji';
 
 export const leakMessage = (reaction: MessageReaction) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
@@ -17,5 +19,17 @@ export const leakMessage = (reaction: MessageReaction) => {
 
   if (!shouldRunLeak(filters)) return;
 
-  reaction.message.reply(reaction.emoji.toString());
+  try {
+    const emoji = pickEmoji(reaction.client, 'watching_you2');
+    reaction.message.reply(emoji.toString());
+  } catch (error: unknown) {
+    if (error instanceof EmojiNotFoundError) {
+      reaction.message.reply(
+        `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`
+      );
+      return;
+    }
+
+    throw error;
+  }
 };
