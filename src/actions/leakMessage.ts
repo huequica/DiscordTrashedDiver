@@ -62,6 +62,13 @@ export const leakMessage = async (reaction: MessageReaction) => {
       return;
     }
 
-    throw error;
+    if (error instanceof Error) {
+      await reaction.message.reply(
+        `${reaction.emoji} < なんか知らんエラーが出たわ`
+      );
+      const errorMessage = '```\n' + `${error.message}\n` + '```';
+      await reaction.message.channel.send(errorMessage);
+      return;
+    }
   }
 };
