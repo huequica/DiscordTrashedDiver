@@ -44,8 +44,8 @@ describe('🚓 leakMessage', () => {
       reactionMock.client.emojis.cache.find = jest
         .fn()
         .mockImplementation(() => ({
-          name: 'boomerang',
-          toString: () => ':boomerang:',
+          name: 'watching_you2',
+          toString: () => ':watching_you2:',
         }));
 
       await leakMessage(reactionMock, {
@@ -53,7 +53,7 @@ describe('🚓 leakMessage', () => {
       });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `:boomerang: ${tweetURL}`
+        `:watching_you2: ${tweetURL}`
       );
     });
   });
