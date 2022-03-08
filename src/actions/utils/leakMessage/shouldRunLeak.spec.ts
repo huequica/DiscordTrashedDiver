@@ -1,18 +1,32 @@
 import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
 
 describe('🚓 shouldRunLeak', () => {
-  it('👮 channel.name が "ごみばこ" 以外のときは undefined を返す', () => {
-    const mockObject = { channelName: 'mockChannel', emojiName: 'troll_face' };
-    expect(shouldRunLeak(mockObject)).toBe(undefined);
+  const createMockObject = () => ({
+    channelName: 'ごみばこ',
+    emojiName: 'troll_face',
+    isAuthorBot: false,
   });
 
-  it('👮 reaction.emoji.name が "troll_face" 以外は undefined を返す', () => {
-    const mockObject = { channelName: 'ごみばこ', emojiName: 'mockEmoji' };
-    expect(shouldRunLeak(mockObject)).toBe(undefined);
-  });
-
-  it('👮 ごみばこチャンネルで "troll_face" の絵文字の場合は true を返す', () => {
-    const mockObject = { channelName: 'ごみばこ', emojiName: 'troll_face' };
+  it('👮 bot ではないアカウントの発言に所定のチャンネルで所定の emoji がつくと true を返却', () => {
+    const mockObject = createMockObject();
     expect(shouldRunLeak(mockObject)).toBe(true);
+  });
+
+  it('👮 bot の発言である場合は条件が合っていても falsy な評価を返す', () => {
+    const mockObject = createMockObject();
+    mockObject.isAuthorBot = true;
+    expect(shouldRunLeak(mockObject)).toBe(undefined);
+  });
+
+  it('👮 チャンネルが違う場合は falsy な評価を返す', () => {
+    const mockObject = createMockObject();
+    mockObject.channelName = 'mockChannel';
+    expect(shouldRunLeak(mockObject)).toBeFalsy();
+  });
+
+  it('👮 絵文字が違う場合は falsy な評価を返す', () => {
+    const mockObject = createMockObject();
+    mockObject.emojiName = 'mockEmoji';
+    expect(shouldRunLeak(mockObject)).toBeFalsy();
   });
 });
