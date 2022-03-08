@@ -9,6 +9,7 @@
     "build": "yarn typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
     "typeCheck": "tsc --noEmit",
     "lint": "eslint --ext .js,.ts src",
+    "lint:fix": "prettier --write . && eslint --ext .js,.ts src --fix",
     "test": "jest"
   },
   "devDependencies": {
