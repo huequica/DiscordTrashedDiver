@@ -3,6 +3,7 @@ import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
 import { pickEmoji } from '@/actions/utils/pickEmoji';
 import { TwitterService } from '@/lib/services/twitter';
 import {
+  ContentsTooLongException,
   EmojiNotFoundError,
   NetworkHandshakeException,
   ServerErrorException,
@@ -12,6 +13,7 @@ import {
   isTextChannel,
   getChannelFromReaction,
 } from '@/typeGuards/isTextChannel';
+import { inspectContents } from '@/actions/utils/leakMessage/inspectContents';
 
 interface Services {
   twitter: TwitterService;
@@ -35,13 +37,19 @@ export const leakMessage = async (
 
   try {
     const twitterService = services?.twitter || new TwitterService();
-    const messageContent = reaction.message.content;
+    const messageContent = inspectContents(reaction.message.content || '');
     if (!messageContent) return;
 
     const tweetResultURL = await twitterService.postTweet(messageContent);
     const emoji = pickEmoji(reaction.client, 'watching_you2');
     await reaction.message.reply(`${emoji} ${tweetResultURL}`);
   } catch (error: unknown) {
+    if (error instanceof ContentsTooLongException) {
+      await reaction.message.reply(
+        `${reaction.emoji} < この投稿長すぎなんだわ`
+      );
+    }
+
     if (error instanceof EmojiNotFoundError) {
       await reaction.message.reply(
         `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`

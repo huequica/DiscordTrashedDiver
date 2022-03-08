@@ -7,6 +7,7 @@ import { TwitterService } from '@/lib/services/twitter';
 import { TwitterRepository } from '@/lib/repositories/twitter';
 import { mockTwitterTokens } from '@/lib/mocks/env';
 import {
+  ContentsTooLongException,
   NetworkHandshakeException,
   ServerErrorException,
   UnauthorizedException,
@@ -59,6 +60,23 @@ describe('🚓 leakMessage', () => {
   });
 
   describe('🆖 REJECTED', () => {
+    it('👮 ContentsTooLongException が帰ってきたらその問題を通知', async () => {
+      const twitterRepository = new TwitterRepository(mockTwitterTokens);
+      const twitterService = new TwitterService(twitterRepository);
+
+      twitterService.postTweet = jest
+        .fn()
+        .mockImplementation(() =>
+          Promise.reject(new ContentsTooLongException())
+        );
+      const reactionMock = generateMockMessageReaction();
+      await leakMessage(reactionMock, { twitter: twitterService });
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(
+        `${reactionMock.emoji} < この投稿長すぎなんだわ`
+      );
+    });
+
     it('👮 NetworkHandshakeException が帰ってきたらその問題を通知', async () => {
       const twitterRepository = new TwitterRepository(mockTwitterTokens);
       const twitterService = new TwitterService(twitterRepository);
