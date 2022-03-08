@@ -13,11 +13,7 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": [
-      "@types/jest"
-    ]
+    "types": ["@types/jest"]
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

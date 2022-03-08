@@ -33,7 +33,7 @@ rules:
 
   # ブロック演算子はスペース入れてね
   block-spacing: error
-  
+
   # `{}` の中の前後はスペースを入れてね
   object-curly-spacing:
     - error
@@ -47,7 +47,7 @@ rules:
 
   # タブとスペースを混ぜないで
   no-mixed-spaces-and-tabs: error
-  
+
   max-len:
     - error
     - code: 80
