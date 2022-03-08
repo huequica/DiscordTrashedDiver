@@ -1,12 +1,12 @@
 # for developers
 
-このリポジトリのディレクトリ責務について掲載します。PRを出される方は参考にしてください。
+このリポジトリのディレクトリ責務について掲載します。PR を出される方は参考にしてください。
 
 # directory, file の責務
 
 ## index.ts
 
-いわゆるエントリーポイントです。この段階でAPIを叩かない範疇でKey情報に問題がないかエラーチェックをしています。
+いわゆるエントリーポイントです。この段階で API を叩かない範疇で Key 情報に問題がないかエラーチェックをしています。
 
 ## events.ts
 
@@ -56,7 +56,7 @@ https://scrapbox.io/discordjs-japan/Gateway_Intents_%E3%81%AE%E5%88%A9%E7%94%A8%
 
 ### @/lib/repositories
 
-外部のAPIを叩いたりする際のリクエストメソッドの最小単位です。  
+外部の API を叩いたりする際のリクエストメソッドの最小単位です。  
 原則ここではクラスを作りその中のメソッドで `Promise` をそのまま帰すようにしてください。( 以下サンプルでの `postTweet` )
 
 ```ts
@@ -90,7 +90,7 @@ export class TwitterRepository {
 
 ### @/lib/service
 
-上記 repositories の返却値を加工した返却値を作成したり, 独自例外を投げるための空間です。留意事項は以下の通りです。  
+上記 repositories の返却値を加工した返却値を作成したり, 独自例外を投げるための空間です。留意事項は以下の通りです。
 
 - constructor の引数として上記の repository のインスタンスを **optional** で取ってください。
   - メソッドをオーバーライドした `repository` をテストコード上で渡すことで返却値や throw されるエラーにテストをすることができるようになるためです。
@@ -147,7 +147,7 @@ export class TwitterService {
 
 service などで throw する独自例外クラスを格納する空間です。  
 上述していますが、ドメインロジック上で `instanceof` を使用してエラーの種類を特定可能にしているためです。  
-基本的には以下コードをそのまま命名変えればOKです。
+基本的には以下コードをそのまま命名変えれば OK です。
 
 ```ts
 // @/lib/exceptions/unauthorized.ts
@@ -165,7 +165,7 @@ export class UnauthorizedException extends Error {
 ### @/lib/mocks
 
 jest でテストコードを書く際のモックデータを格納する空間です。  
-特に言うことはないです。何なら割と適当です。  
+特に言うことはないです。何なら割と適当です。
 
 ## @/typeGuards
 
