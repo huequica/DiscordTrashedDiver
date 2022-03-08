@@ -28,7 +28,7 @@ export const leakMessage = async (
   const filters: Parameters<typeof shouldRunLeak>[0] = {
     channelName: channel.name,
     emojiName: reaction.emoji.name || '',
-    messageAuthor: reaction.message.author?.id || '',
+    isAuthorBot: reaction.message.author?.bot || false,
   };
 
   if (!shouldRunLeak(filters)) return;
