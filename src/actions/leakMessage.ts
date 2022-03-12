@@ -48,6 +48,7 @@ export const leakMessage = async (
       await reaction.message.reply(
         `${reaction.emoji} < この投稿長すぎなんだわ`
       );
+      return;
     }
 
     if (error instanceof EmojiNotFoundError) {
