@@ -10,7 +10,7 @@ on:
       - src/**/*
 
 jobs:
-  typeCheck:
+  lint:
     name: lint
     runs-on: ubuntu-latest
     steps:
