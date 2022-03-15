@@ -11,7 +11,7 @@ on:
 
 jobs:
   typeCheck:
-    name: typecheck
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
