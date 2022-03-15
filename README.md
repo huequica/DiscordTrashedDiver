@@ -21,4 +21,4 @@
 2. `yarn` で依存を落としてくる
 3. `yarn build` で ビルドしたファイルが出来る
 4. `.env.template` をコピペして `.env` を作り、各種情報を追記する
-5. `node index.js` で実行
+5. `node dist/index.js` で実行
