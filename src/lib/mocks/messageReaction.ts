@@ -50,7 +50,7 @@ export const generateMockMessageReaction = (
       reply: jest.fn().mockImplementation(),
     },
     emoji: {
-      name: options?.emoji?.name || 'troll_face',
+      name: options?.emoji?.name || 'thinking_mikan',
       // モックで適当に toString をオーバーライドして返却値を設定
       toString() {
         return `:${this.name}:`;
