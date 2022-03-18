@@ -1,4 +1,4 @@
-import { MessageReaction } from 'discord.js';
+import { MessageReaction, ReplyMessageOptions } from 'discord.js';
 import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
 import { pickEmoji } from '@/actions/utils/pickEmoji';
 import { TwitterService } from '@/lib/services/twitter';
@@ -42,7 +42,13 @@ export const leakMessage = async (
 
     const tweetResultURL = await twitterService.postTweet(messageContent);
     const emoji = pickEmoji(reaction.client, 'watching_you2');
-    await reaction.message.reply(`${emoji} ${tweetResultURL}`);
+
+    const replyOptions: ReplyMessageOptions = {
+      content: `${emoji} ${tweetResultURL}`,
+      allowedMentions: { repliedUser: false }, // メッセージの送信者に対しての通知が無効になる
+    };
+
+    await reaction.message.reply(replyOptions);
   } catch (error: unknown) {
     if (error instanceof ContentsTooLongException) {
       await reaction.message.reply(
