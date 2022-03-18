@@ -21,7 +21,7 @@ describe('🚓 leakMessage', () => {
         name: 'general',
       },
       emoji: {
-        name: 'troll_face',
+        name: 'thinking_mikan',
       },
     };
 
