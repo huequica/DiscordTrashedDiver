@@ -3,7 +3,7 @@ import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
 describe('🚓 shouldRunLeak', () => {
   const createMockObject = () => ({
     channelName: 'ごみばこ',
-    emojiName: 'troll_face',
+    emojiName: 'thinking_mikan',
     isAuthorBot: false,
   });
 
