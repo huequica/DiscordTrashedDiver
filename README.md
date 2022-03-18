@@ -4,7 +4,7 @@
 
 # feature
 
-- 「ごみばこ」というチャンネルで発言されたものに `:troll_face:` の絵文字でリアクションをつけると twitter に投下される  
+- 「ごみばこ」というチャンネルで発言されたものに `:thinking_mikan:` の絵文字でリアクションをつけると twitter に投下される  
   ![Screen Shot 2022-03-06 at 4 40 29](https://user-images.githubusercontent.com/40014236/156897828-a1b5bbce-bebd-4fa0-a23a-3c8c5e6c1e66.png)
 
 # require environment
