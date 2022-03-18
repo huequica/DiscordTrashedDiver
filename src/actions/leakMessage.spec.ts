@@ -12,6 +12,7 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
+import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 
 describe('🚓 leakMessage', () => {
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
@@ -53,9 +54,9 @@ describe('🚓 leakMessage', () => {
         twitter: twitterService,
       });
 
-      expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `:watching_you2: ${tweetURL}`
-      );
+      const replyOptions = buildNoMentionReply(`:watching_you2: ${tweetURL}`);
+
+      expect(reactionMock.message.reply).toHaveBeenCalledWith(replyOptions);
     });
   });
 
@@ -73,7 +74,7 @@ describe('🚓 leakMessage', () => {
       await leakMessage(reactionMock, { twitter: twitterService });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `${reactionMock.emoji} < この投稿長すぎなんだわ`
+        buildNoMentionReply(`${reactionMock.emoji} < この投稿長すぎなんだわ`)
       );
     });
 
@@ -91,7 +92,9 @@ describe('🚓 leakMessage', () => {
       await leakMessage(reactionMock, { twitter: twitterService });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `${reactionMock.emoji} < ネットワークの接続で問題が発生したぽいで`
+        buildNoMentionReply(
+          `${reactionMock.emoji} < ネットワークの接続で問題が発生したぽいで`
+        )
       );
     });
 
@@ -107,7 +110,9 @@ describe('🚓 leakMessage', () => {
       await leakMessage(reactionMock, { twitter: twitterService });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `${reactionMock.emoji} < twitter の認証で死んだんだわ`
+        buildNoMentionReply(
+          `${reactionMock.emoji} < twitter の認証で死んだんだわ`
+        )
       );
     });
 
@@ -123,7 +128,9 @@ describe('🚓 leakMessage', () => {
       await leakMessage(reactionMock, { twitter: twitterService });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `${reactionMock.emoji} < Twitter のサービスが死んでるかもしれん`
+        buildNoMentionReply(
+          `${reactionMock.emoji} < Twitter のサービスが死んでるかもしれん`
+        )
       );
     });
 
@@ -141,7 +148,9 @@ describe('🚓 leakMessage', () => {
       await leakMessage(reactionMock, { twitter: twitterService });
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(
-        `${reactionMock.emoji} < なんか知らんエラーが出たわ`
+        buildNoMentionReply(
+          `${reactionMock.emoji} < なんか知らんエラーが出たわ`
+        )
       );
       expect(reactionMock.message.channel.send).toHaveBeenCalledWith(
         errorMessage
