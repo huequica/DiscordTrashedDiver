@@ -1,6 +1,7 @@
-import { MessageReaction, ReplyMessageOptions } from 'discord.js';
+import { MessageReaction } from 'discord.js';
 import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
 import { pickEmoji } from '@/actions/utils/pickEmoji';
+import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 import { TwitterService } from '@/lib/services/twitter';
 import {
   ContentsTooLongException,
@@ -43,51 +44,54 @@ export const leakMessage = async (
     const tweetResultURL = await twitterService.postTweet(messageContent);
     const emoji = pickEmoji(reaction.client, 'watching_you2');
 
-    const replyOptions: ReplyMessageOptions = {
-      content: `${emoji} ${tweetResultURL}`,
-      allowedMentions: { repliedUser: false }, // メッセージの送信者に対しての通知が無効になる
-    };
+    const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
 
     await reaction.message.reply(replyOptions);
   } catch (error: unknown) {
     if (error instanceof ContentsTooLongException) {
       await reaction.message.reply(
-        `${reaction.emoji} < この投稿長すぎなんだわ`
+        buildNoMentionReply(`${reaction.emoji} < この投稿長すぎなんだわ`)
       );
       return;
     }
 
     if (error instanceof EmojiNotFoundError) {
       await reaction.message.reply(
-        `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`
+        buildNoMentionReply(
+          `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`
+        )
       );
       return;
     }
 
     if (error instanceof NetworkHandshakeException) {
       await reaction.message.reply(
-        `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`
+        buildNoMentionReply(
+          `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`
+        )
       );
       return;
     }
 
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
-        `${reaction.emoji} < twitter の認証で死んだんだわ`
+        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`)
       );
       return;
     }
 
     if (error instanceof ServerErrorException) {
       await reaction.message.reply(
-        `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`
+        buildNoMentionReply(
+          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`
+        )
       );
       return;
     }
 
     if (error instanceof Error) {
       await reaction.message.reply(
-        `${reaction.emoji} < なんか知らんエラーが出たわ`
+        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`)
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
       await reaction.message.channel.send(errorMessage);
