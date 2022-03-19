@@ -1,4 +1,4 @@
-import Twitter from 'twitter-api-v2';
+import Twitter, { TUploadableMedia } from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
 
 /**
@@ -27,10 +27,10 @@ export class TwitterRepository {
 
   /**
    * ファイルをアップロードする
-   * @param file ファイルの buffer
+   * @param file ファイルの宛先だったり buffer 本体
    * @return {Promise<string>} メディアの id
    */
-  async uploadMedia(file: Buffer) {
+  async uploadMedia(file: TUploadableMedia) {
     return this.client.v1.uploadMedia(file);
   }
 }
