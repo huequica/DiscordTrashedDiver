@@ -36,3 +36,5 @@ export const TWITTER_TOKENS = () => {
     },
   };
 };
+
+export const APPLICATION_TMP_DIRECTORY = '/tmp/huequica/DiscordTrashedDiver';
