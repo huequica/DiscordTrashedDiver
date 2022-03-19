@@ -61,5 +61,6 @@ export const generateMockMessageReaction = (
         cache: mockGuildEmojis(options?.emoji?.omitExpectEmoji || false),
       },
     },
+    remove: jest.fn(),
   } as unknown as MessageReaction;
 };

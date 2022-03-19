@@ -32,7 +32,7 @@ describe('🚓 leakMessage', () => {
   });
 
   describe('🆗 RESOLVE ALL', () => {
-    it('👮 twitter への投稿まですべて通った場合は twitter のURLを送信する', async () => {
+    it('👮 twitter への投稿まですべて通った場合は twitter のURLを送信する, リアクションも消す', async () => {
       const twitterRepository = new TwitterRepository(mockTwitterTokens);
       const twitterService = new TwitterService(twitterRepository);
 
@@ -57,11 +57,12 @@ describe('🚓 leakMessage', () => {
       const replyOptions = buildNoMentionReply(`:watching_you2: ${tweetURL}`);
 
       expect(reactionMock.message.reply).toHaveBeenCalledWith(replyOptions);
+      expect(reactionMock.remove).toHaveBeenCalled();
     });
   });
 
   describe('🆖 REJECTED', () => {
-    it('👮 ContentsTooLongException が帰ってきたらその問題を通知', async () => {
+    it('👮 ContentsTooLongException が帰ってきたらその問題を通知, リアクションも消す', async () => {
       const twitterRepository = new TwitterRepository(mockTwitterTokens);
       const twitterService = new TwitterService(twitterRepository);
 

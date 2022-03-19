@@ -97,5 +97,8 @@ export const leakMessage = async (
       await reaction.message.channel.send(errorMessage);
       return;
     }
+  } finally {
+    // ついた絵文字が消される
+    await reaction.remove();
   }
 };
