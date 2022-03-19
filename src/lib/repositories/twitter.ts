@@ -24,4 +24,13 @@ export class TwitterRepository {
   async postTweet(content: string) {
     return this.client.v1.tweet(content);
   }
+
+  /**
+   * ファイルをアップロードする
+   * @param file ファイルの buffer
+   * @return {Promise<string>} メディアの id
+   */
+  async uploadMedia(file: Buffer) {
+    return this.client.v1.uploadMedia(file);
+  }
 }
