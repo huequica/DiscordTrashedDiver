@@ -39,7 +39,6 @@ export const leakMessage = async (
   try {
     const twitterService = services?.twitter || new TwitterService();
     const messageContent = inspectContents(reaction.message.content || '');
-    if (!messageContent) return;
 
     const tweetResultURL = await twitterService.postTweet(messageContent);
     const emoji = pickEmoji(reaction.client, 'watching_you2');
