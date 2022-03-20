@@ -41,9 +41,6 @@ export const leakMessage = async (
     const twitterService = services?.twitter || new TwitterService();
     const messageContent = inspectContents(reaction.message.content || '');
 
-    const tweetResultURL = await twitterService.postTweet(messageContent);
-    const emoji = pickEmoji(reaction.client, 'watching_you2');
-
     // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
     const imageAttachments = pickAttachments(reaction).filter((attachment) =>
       /image\/.*/.test(attachment.contentType)
@@ -58,6 +55,9 @@ export const leakMessage = async (
     const mediaIds: string[] | undefined = mediaIdPromises
       ? await Promise.all(mediaIdPromises)
       : undefined;
+
+    const tweetResultURL = await twitterService.postTweet(messageContent);
+    const emoji = pickEmoji(reaction.client, 'watching_you2');
 
     const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
 
