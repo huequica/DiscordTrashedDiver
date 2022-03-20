@@ -20,9 +20,10 @@ export class TwitterRepository {
    * テキストをツイートする
    * WIP: 画像などのメディアを添付する(repository 設計もまだ)
    * @param content ツイート文面
+   * @param mediaIds 画像メディア郡
    */
-  async postTweet(content: string) {
-    return this.client.v1.tweet(content);
+  async postTweet(content: string, mediaIds?: string[]) {
+    return this.client.v1.tweet(content, { media_ids: mediaIds });
   }
 
   /**

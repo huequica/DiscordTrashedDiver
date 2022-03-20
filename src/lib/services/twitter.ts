@@ -20,12 +20,13 @@ export class TwitterService {
   /**
    * twitter へ文面を投稿する
    * @param content ツイート文面
+   * @param mediaIds 画像郡
    * @return {Promise<string>} ツイートのリンク
    */
-  async postTweet(content: string): Promise<string> {
+  async postTweet(content: string, mediaIds?: string[]): Promise<string> {
     try {
       return await this.repository
-        .postTweet(content)
+        .postTweet(content, mediaIds)
         .then(
           (res) =>
             `https://twitter.com/${res.user.screen_name}/status/${res.id_str}`
