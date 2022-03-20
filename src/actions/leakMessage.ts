@@ -15,6 +15,7 @@ import {
   getChannelFromReaction,
 } from '@/typeGuards/isTextChannel';
 import { inspectContents } from '@/actions/utils/leakMessage/inspectContents';
+import { pickAttachments } from '@/actions/utils/pickAttachments';
 
 interface Services {
   twitter: TwitterService;
@@ -42,6 +43,21 @@ export const leakMessage = async (
 
     const tweetResultURL = await twitterService.postTweet(messageContent);
     const emoji = pickEmoji(reaction.client, 'watching_you2');
+
+    // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
+    const imageAttachments = pickAttachments(reaction).filter((attachment) =>
+      /image\/.*/.test(attachment.contentType)
+    );
+
+    // 画像ファイルが1つ以上ある場合だけ Promise を生成、なければ undefined を返却
+    const mediaIdPromises: Promise<string>[] | undefined =
+      imageAttachments.length > 0
+        ? imageAttachments.map((image) => twitterService.uploadMedia(image.url))
+        : undefined;
+
+    const mediaIds: string[] | undefined = mediaIdPromises
+      ? await Promise.all(mediaIdPromises)
+      : undefined;
 
     const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
 
