@@ -56,7 +56,11 @@ export const leakMessage = async (
       ? await Promise.all(mediaIdPromises)
       : undefined;
 
-    const tweetResultURL = await twitterService.postTweet(messageContent);
+    const tweetResultURL = await twitterService.postTweet(
+      messageContent,
+      mediaIds
+    );
+
     const emoji = pickEmoji(reaction.client, 'watching_you2');
 
     const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
