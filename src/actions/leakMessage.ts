@@ -46,6 +46,8 @@ export const leakMessage = async (
       /image\/.*/.test(attachment.contentType)
     );
 
+    if (!messageContent && imageAttachments.length === 0) return;
+
     // 画像ファイルが1つ以上ある場合だけ Promise を生成、なければ undefined を返却
     const mediaIdPromises: Promise<string>[] | undefined =
       imageAttachments.length > 0
