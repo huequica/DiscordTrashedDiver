@@ -12,16 +12,18 @@ export type omittedAttachment = {
 };
 
 /**
- * メッセージに付属しているファイルの情報を取得して必要な情報だけ返す
+ * メッセージに付属しているファイルの情報を4つまで取得して必要な情報だけ返す
  * @param reaction
  * @see https://discord.js.org/#/docs/main/stable/class/MessageAttachment
  */
 export const pickAttachments = (
   reaction: MessageReaction
 ): omittedAttachment[] => {
-  return reaction.message.attachments.map((e) => ({
-    contentType: e.contentType || '',
-    url: e.url,
-    id: e.id,
-  }));
+  return reaction.message.attachments
+    .map((e) => ({
+      contentType: e.contentType || '',
+      url: e.url,
+      id: e.id,
+    }))
+    .slice(0, 4);
 };
