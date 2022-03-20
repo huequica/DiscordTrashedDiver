@@ -14,9 +14,20 @@ export const saveToTmpFile = async (url: string): Promise<string> => {
   const tmpDirectory = `${APPLICATION_TMP_DIRECTORY}/leakMessage`;
 
   try {
-    const content = await axios.get<string>(url).then((res) => res.data);
+    const content = await axios
+      .get<ArrayBuffer>(url, { responseType: 'arraybuffer' })
+      .then((res) => res.data);
     await makeDir(tmpDirectory);
-    await fs.writeFile(`${tmpDirectory}/${fileName}`, content);
+
+    // どうにも自分の知見ではつらそうだった, ゆるしてほしい
+    await fs.writeFile(
+      `${tmpDirectory}/${fileName}`,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      new Buffer.from(content),
+      'binary'
+    );
+
     return `${tmpDirectory}/${fileName}`;
   } catch (error) {
     if (axios.isAxiosError(error)) {
