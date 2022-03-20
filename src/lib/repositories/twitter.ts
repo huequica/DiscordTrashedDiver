@@ -1,4 +1,4 @@
-import Twitter from 'twitter-api-v2';
+import Twitter, { TUploadableMedia } from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
 
 /**
@@ -20,8 +20,18 @@ export class TwitterRepository {
    * テキストをツイートする
    * WIP: 画像などのメディアを添付する(repository 設計もまだ)
    * @param content ツイート文面
+   * @param mediaIds 画像メディア郡
    */
-  async postTweet(content: string) {
-    return this.client.v1.tweet(content);
+  async postTweet(content: string, mediaIds?: string[]) {
+    return this.client.v1.tweet(content, { media_ids: mediaIds });
+  }
+
+  /**
+   * ファイルをアップロードする
+   * @param file ファイルの宛先だったり buffer 本体
+   * @return {Promise<string>} メディアの id
+   */
+  async uploadMedia(file: TUploadableMedia) {
+    return this.client.v1.uploadMedia(file);
   }
 }
