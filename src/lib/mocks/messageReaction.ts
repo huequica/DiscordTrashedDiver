@@ -1,4 +1,4 @@
-import { GuildEmoji, MessageReaction } from 'discord.js';
+import { Collection, GuildEmoji, MessageReaction } from 'discord.js';
 
 const mockGuildEmojis = (omitExpectEmoji: boolean): GuildEmoji[] => {
   const objects = new Array(3).map(
@@ -42,6 +42,7 @@ export const generateMockMessageReaction = (
   return {
     message: {
       content: options?.message?.content || 'mockMessage!',
+      attachments: new Collection(),
       channel: {
         type: options?.channel?.type || 'GUILD_TEXT',
         name: options?.channel?.name || 'ごみばこ',
