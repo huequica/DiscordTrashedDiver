@@ -1,5 +1,6 @@
 interface TweetRemoveRuleBases {
   emojiName: string; // ついた emoji の名前
+  channelName: string; //チャンネル名
   isReactedMessageAuthorBot: boolean; // emoji がついたメッセージが bot の発言かどうか
   reactorId: string; // リアクションの emoji を追加した人
   referencedMessageAuthorId: string; //リファレンス元の作者
@@ -18,6 +19,9 @@ export const shouldRemoveTweet = (rules: TweetRemoveRuleBases): boolean => {
 
   // emoji.name が `x` でなければ無視
   if (rules.emojiName !== 'x') return false;
+
+  // チャンネル名がごみばこ以外の場所での発言は無視
+  if (rules.channelName !== 'ごみばこ') return false;
 
   // 最後に reference 元のユーザーと emoji の追加者が同じ id かどうかを返却
   return rules.reactorId === rules.referencedMessageAuthorId;

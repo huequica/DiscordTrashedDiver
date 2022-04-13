@@ -8,6 +8,10 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
+import {
+  getChannelFromReaction,
+  isTextChannel,
+} from '@/typeGuards/isTextChannel';
 
 interface Services {
   twitter: TwitterService;
@@ -18,8 +22,13 @@ export const removeTweet = async (
   reactorUser: User,
   services?: Services
 ) => {
+  // 原則として来ることはないがコンパイラを黙らせる意味で書いている
+  const channel = getChannelFromReaction(reaction);
+  if (!isTextChannel(channel)) return;
+
   const filter: Parameters<typeof shouldRemoveTweet>[0] = {
     emojiName: reaction.emoji.name || '',
+    channelName: channel.name,
     isReactedMessageAuthorBot: reaction.message.author?.bot || false,
     reactorId: reactorUser.id,
     referencedMessageAuthorId: (await reaction.message.fetchReference()).author
