@@ -16,7 +16,7 @@ describe('🚓 removeTweet', () => {
         name: 'general',
       },
       emoji: {
-        name: 'x',
+        name: '❌',
       },
     };
 
@@ -38,7 +38,7 @@ describe('🚓 removeTweet', () => {
           content: 'https://twitter.com/hogeUser/status/12345678901234568901',
         },
         emoji: {
-          name: 'x',
+          name: '❌',
         },
       });
       const reactionUserMock = generateMockUser({ id: 'mockUser' });
@@ -65,7 +65,7 @@ describe('🚓 removeTweet', () => {
           content: 'https://hoge.com/hogeUser/12345678901234568901',
         },
         emoji: {
-          name: 'x',
+          name: '❌',
         },
       });
       const reactionUserMock = generateMockUser({ id: 'mockUser' });
