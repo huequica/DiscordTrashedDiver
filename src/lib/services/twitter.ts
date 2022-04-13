@@ -81,4 +81,28 @@ export class TwitterService {
       throw error;
     }
   }
+
+  async deleteTweet(tweetId: string): Promise<boolean> {
+    try {
+      return await this.repository
+        .deleteTweet(tweetId)
+        .then((res) => Boolean(res));
+    } catch (error: unknown) {
+      // シンプルに疎通ができなかったなどのエラー
+      if (error instanceof ApiRequestError) {
+        throw new NetworkHandshakeException();
+      }
+
+      // twitter から エラーのレスポンスが返却されたなどのエラー
+      if (error instanceof ApiResponseError) {
+        switch (error.code) {
+          case 401:
+            throw new UnauthorizedException();
+          case 500:
+            throw new ServerErrorException();
+        }
+      }
+      throw error;
+    }
+  }
 }
