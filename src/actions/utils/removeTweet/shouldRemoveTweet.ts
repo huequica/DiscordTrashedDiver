@@ -15,7 +15,7 @@ interface TweetRemoveRuleBases {
  */
 export const shouldRemoveTweet = (rules: TweetRemoveRuleBases): boolean => {
   // bot の発言についたものでなければ無視
-  if (rules.isReactedMessageAuthorBot) return false;
+  if (!rules.isReactedMessageAuthorBot) return false;
 
   // emoji.name が `❌` でなければ無視
   if (rules.emojiName !== '❌') return false;
