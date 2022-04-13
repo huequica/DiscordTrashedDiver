@@ -34,4 +34,13 @@ export class TwitterRepository {
   async uploadMedia(file: TUploadableMedia) {
     return this.client.v1.uploadMedia(file);
   }
+
+  /**
+   * tweet を削除する
+   * @param tweetId ツイートのId 123456789012345 みたいな数値形式になってる
+   * @return {Promise}
+   */
+  async deleteTweet(tweetId: string) {
+    return this.client.v1.deleteTweet(tweetId);
+  }
 }
