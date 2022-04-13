@@ -34,6 +34,9 @@ describe('🚓 removeTweet', () => {
 
       const reactionMock = generateMockMessageReaction({
         message: {
+          author: {
+            bot: true,
+          },
           referenceUserId: 'mockUser',
           content: 'https://twitter.com/hogeUser/status/12345678901234568901',
         },
@@ -61,6 +64,9 @@ describe('🚓 removeTweet', () => {
 
       const reactionMock = generateMockMessageReaction({
         message: {
+          author: {
+            bot: true,
+          },
           referenceUserId: 'mockUser',
           content: 'https://hoge.com/hogeUser/12345678901234568901',
         },

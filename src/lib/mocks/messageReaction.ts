@@ -58,6 +58,7 @@ export const generateMockMessageReaction = (
       reply: jest.fn().mockImplementation(),
 
       // リプ元の参照
+      reference: [],
       fetchReference: () =>
         Promise.resolve({
           author: { id: options?.message?.referenceUserId || 'hogeUser' },
