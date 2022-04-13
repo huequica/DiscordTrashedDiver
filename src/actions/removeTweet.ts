@@ -31,7 +31,11 @@ export const removeTweet = async (
 
   try {
     const tweetId = pickTweetId(reaction.message.content || '');
-    return twitterService.deleteTweet(tweetId);
+    await twitterService.deleteTweet(tweetId);
+
+    await reaction.message.reply(
+      'ツイート削除したで. 念の為リンク踏んで確認してな'
+    );
   } catch (error: unknown) {
     if (error instanceof NetworkHandshakeException) {
       await reaction.message.reply(
