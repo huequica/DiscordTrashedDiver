@@ -31,8 +31,9 @@ export const removeTweet = async (
     channelName: channel.name,
     isReactedMessageAuthorBot: reaction.message.author?.bot || false,
     reactorId: reactorUser.id,
-    referencedMessageAuthorId: (await reaction.message.fetchReference()).author
-      .id,
+    referencedMessageAuthorId: reaction.message.reference
+      ? (await reaction.message.fetchReference()).author.id
+      : '',
   };
 
   if (!shouldRemoveTweet(filter)) return;
@@ -71,13 +72,13 @@ export const removeTweet = async (
       return;
     }
 
-    if (error instanceof Error) {
-      await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`)
-      );
-      const errorMessage = '```\n' + `${error.message}\n` + '```';
-      await reaction.message.channel.send(errorMessage);
-      return;
-    }
+    // if (error instanceof Error) {
+    //   await reaction.message.reply(
+    //     buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`)
+    //   );
+    //   const errorMessage = '```\n' + `${error.message}\n` + '```';
+    //   await reaction.message.channel.send(errorMessage);
+    //   return;
+    // }
   }
 };
