@@ -22,6 +22,10 @@ const mockGuildEmojis = (omitExpectEmoji: boolean): GuildEmoji[] => {
 interface MockMessageReactionOptions {
   message: {
     content?: string;
+    referenceUserId?: string;
+    author?: {
+      bot?: boolean;
+    };
   };
   channel: {
     name?: string;
@@ -42,6 +46,9 @@ export const generateMockMessageReaction = (
   return {
     message: {
       content: options?.message?.content || 'mockMessage!',
+      author: {
+        bot: options?.message?.author || false,
+      },
       attachments: new Collection(),
       channel: {
         type: options?.channel?.type || 'GUILD_TEXT',
@@ -49,6 +56,12 @@ export const generateMockMessageReaction = (
         send: jest.fn().mockImplementation(),
       },
       reply: jest.fn().mockImplementation(),
+
+      // リプ元の参照
+      fetchReference: () =>
+        Promise.resolve({
+          author: { id: options?.message?.referenceUserId || 'hogeUser' },
+        }),
     },
     emoji: {
       name: options?.emoji?.name || 'thinking_mikan',
