@@ -1,5 +1,6 @@
-import { Client, MessageReaction } from 'discord.js';
+import { Client, MessageReaction, User } from 'discord.js';
 import { leakMessage } from '@/actions/leakMessage';
+import { removeTweet } from '@/actions/removeTweet';
 
 /**
  * イベントを登録していくための空間
@@ -11,9 +12,12 @@ export const subscribeEvents = (client: Client): Client => {
     console.log('start discord bot service!');
   });
 
-  client.on('messageReactionAdd', (reaction) => {
+  client.on('messageReactionAdd', (reaction, user) => {
     if (!(reaction instanceof MessageReaction)) return;
     leakMessage(reaction);
+
+    if (!(user instanceof User)) return;
+    removeTweet(reaction, user);
   });
 
   return client;
