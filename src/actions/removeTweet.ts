@@ -12,7 +12,7 @@ import {
   getChannelFromReaction,
   isTextChannel,
 } from '@/typeGuards/isTextChannel';
-
+import { BOT_MANAGER_ROLE_ID } from '@/config/env';
 interface Services {
   twitter: TwitterService;
 }
@@ -26,6 +26,12 @@ export const removeTweet = async (
   const channel = getChannelFromReaction(reaction);
   if (!isTextChannel(channel)) return;
 
+  const fetchedUser = await reaction.message.member?.fetch(true);
+  const permission = {
+    isOwner: (reaction.message.guild?.ownerId ?? '') === reactorUser.id,
+    isManager: fetchedUser?.roles.cache.has(BOT_MANAGER_ROLE_ID()) ?? false,
+  };
+
   const filter: Parameters<typeof shouldRemoveTweet>[0] = {
     emojiName: reaction.emoji.name || '',
     channelName: channel.name,
@@ -34,9 +40,12 @@ export const removeTweet = async (
     referencedMessageAuthorId: reaction.message.reference
       ? (await reaction.message.fetchReference()).author.id
       : '',
+    isBotManager: permission.isOwner || permission.isManager,
   };
 
-  if (!shouldRemoveTweet(filter)) return;
+  if (!shouldRemoveTweet(filter)) {
+    return;
+  }
   const twitterService = services?.twitter || new TwitterService();
 
   try {

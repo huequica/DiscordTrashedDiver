@@ -37,4 +37,12 @@ export const TWITTER_TOKENS = () => {
   };
 };
 
+export const BOT_MANAGER_ROLE_ID = (): string => {
+  const result = process.env.BOT_MANAGER_ROLE_ID;
+  if (!result) {
+    throw new Error('Caught undefined in bot manager role id from .env file!');
+  }
+  return result;
+};
+
 export const APPLICATION_TMP_DIRECTORY = '/tmp/huequica/DiscordTrashedDiver';
