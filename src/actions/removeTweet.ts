@@ -26,10 +26,17 @@ export const removeTweet = async (
   const channel = getChannelFromReaction(reaction);
   if (!isTextChannel(channel)) return;
 
-  const fetchedUser = await reaction.message.member?.fetch(true);
+  const managerRole = reaction.message.guild?.roles.cache.get(
+    BOT_MANAGER_ROLE_ID()
+  );
+
+  if (!managerRole) {
+    throw new Error('Cannot detected manage role in guild!');
+  }
+
   const permission = {
     isOwner: (reaction.message.guild?.ownerId ?? '') === reactorUser.id,
-    isManager: fetchedUser?.roles.cache.has(BOT_MANAGER_ROLE_ID()) ?? false,
+    isManager: Boolean(managerRole.members.get(reactorUser.id)) ?? false,
   };
 
   const filter: Parameters<typeof shouldRemoveTweet>[0] = {

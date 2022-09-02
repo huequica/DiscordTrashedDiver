@@ -10,8 +10,8 @@ on:
       - src/**/*
 
 jobs:
-  typeCheck:
-    name: typecheck
+  test:
+    name: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

@@ -10,6 +10,8 @@ import { TwitterService } from '@/lib/services/twitter';
 import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 
 describe('🚓 removeTweet', () => {
+  process.env.BOT_MANAGER_ROLE_ID = 'mockRoleId';
+
   it('👮 フィルターを通らない場合は void で早期リターンする', () => {
     const mockReactionOptions: GenerateMockMessageReactionOptions = {
       channel: {
