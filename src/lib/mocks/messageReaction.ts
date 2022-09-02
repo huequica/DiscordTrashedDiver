@@ -43,6 +43,12 @@ export type GenerateMockMessageReactionOptions =
 export const generateMockMessageReaction = (
   options?: GenerateMockMessageReactionOptions
 ): MessageReaction => {
+  const role = {
+    members: {
+      get: () => ({}),
+    },
+  };
+
   return {
     message: {
       content: options?.message?.content || 'mockMessage!',
@@ -63,6 +69,13 @@ export const generateMockMessageReaction = (
         Promise.resolve({
           author: { id: options?.message?.referenceUserId || 'hogeUser' },
         }),
+      guild: {
+        roles: {
+          cache: {
+            get: () => role,
+          },
+        },
+      },
     },
     emoji: {
       name: options?.emoji?.name || 'thinking_mikan',
