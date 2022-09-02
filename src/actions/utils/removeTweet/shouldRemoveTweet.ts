@@ -1,10 +1,16 @@
 interface TweetRemoveRuleBases {
-  emojiName: string; // ついた emoji の名前
-  channelName: string; //チャンネル名
-  isReactedMessageAuthorBot: boolean; // emoji がついたメッセージが bot の発言かどうか
-  reactorId: string; // リアクションの emoji を追加した人
-  referencedMessageAuthorId: string; //リファレンス元の作者
-  isBotManager: boolean; // BotManager 権限があるかどうか
+  // ついた emoji の名前
+  emojiName: string;
+  //チャンネル名
+  channelName: string;
+  // emoji がついたメッセージが bot の発言かどうか
+  isReactedMessageAuthorBot: boolean;
+  // リアクションの emoji を追加した人
+  reactorId: string;
+  //リファレンス元の作者
+  referencedMessageAuthorId: string;
+  // BotManager 権限があるかどうか
+  isBotManager: boolean;
 }
 
 /**
