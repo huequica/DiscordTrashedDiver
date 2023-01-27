@@ -10,10 +10,7 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
-import {
-  isTextChannel,
-  getChannelFromReaction,
-} from '@/typeGuards/isTextChannel';
+import { isTextChannel } from '@/typeGuards/isTextChannel';
 import { inspectContents } from '@/actions/utils/leakMessage/inspectContents';
 import { pickAttachments } from '@/actions/utils/pickAttachments';
 
@@ -26,7 +23,7 @@ export const leakMessage = async (
   services?: Services
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
-  const channel = getChannelFromReaction(reaction);
+  const channel = reaction.message.channel;
   if (!isTextChannel(channel)) return;
 
   const filters: Parameters<typeof shouldRunLeak>[0] = {
