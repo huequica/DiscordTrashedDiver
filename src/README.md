@@ -171,17 +171,9 @@ jest でテストコードを書く際のモックデータを格納する空間
 
 型ガード関数を書くための空間です。  
 `instanceof` で判別可能なものがほとんどですが、モック化が死ぬほど大変になるのでそれっぽくやってます。  
-型が export されていないなどで引数の型付けがつらい場合は以下のような Getter を噛ませた `ReturnType` を使うと簡単です。
 
 ```ts
 // @/typeGuards/isTextChannel.ts
-
-/**
- * reaction から channel Object を返す
- * @param reaction イベントから投げられてきたリアクションメッセージ
- */
-export const getChannelFromReaction = (reaction: MessageReaction) =>
-  reaction.message.channel;
 
 /**
  * `channel instanceof TextChannel` の wrapper
