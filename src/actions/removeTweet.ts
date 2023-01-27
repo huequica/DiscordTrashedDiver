@@ -8,10 +8,7 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
-import {
-  getChannelFromReaction,
-  isTextChannel,
-} from '@/typeGuards/isTextChannel';
+import { isTextChannel } from '@/typeGuards/isTextChannel';
 import { BOT_MANAGER_ROLE_ID } from '@/config/env';
 interface Services {
   twitter: TwitterService;
@@ -23,7 +20,7 @@ export const removeTweet = async (
   services?: Services
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
-  const channel = getChannelFromReaction(reaction);
+  const channel = reaction.message.channel;
   if (!isTextChannel(channel)) return;
 
   const managerRole = reaction.message.guild?.roles.cache.get(
