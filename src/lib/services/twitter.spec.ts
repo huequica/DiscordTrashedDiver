@@ -21,7 +21,7 @@ describe('🚓 TwitterService#postTweet', () => {
         .mockImplementation(() => Promise.resolve(mockTweet));
       const service = new TwitterService(repository);
 
-      const expectURL = `https://twitter.com/${mockTweet.user.screen_name}/status/${mockTweet.id_str}`;
+      const expectURL = `https://twitter.com/leakFromSawada/status/${mockTweet.data.id}`;
       expect(await service.postTweet('sample content tweet!')).toBe(expectURL);
     });
   });
