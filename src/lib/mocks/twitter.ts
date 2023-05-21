@@ -1,8 +1,8 @@
-import { TweetV1 } from 'twitter-api-v2';
+import { TweetV2PostTweetResult } from 'twitter-api-v2';
 
-export const mockTweet: TweetV1 = {
-  user: {
-    screen_name: 'mockTwitterUser',
+export const mockTweet: TweetV2PostTweetResult = {
+  data: {
+    id: '01234567890',
+    text: 'mockTwitterUser',
   },
-  id_str: '01234567890',
-} as TweetV1;
+} as TweetV2PostTweetResult;

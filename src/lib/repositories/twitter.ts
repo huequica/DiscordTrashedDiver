@@ -1,19 +1,26 @@
-import Twitter, { TUploadableMedia } from 'twitter-api-v2';
+import { TwitterApi, TUploadableMedia } from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
 
 /**
  * Twitter への投稿を管轄する repository
  */
 export class TwitterRepository {
-  private client: Twitter;
+  private client: TwitterApi;
 
   constructor(keys: ReturnType<typeof TWITTER_TOKENS>) {
-    this.client = new Twitter({
+    this.client = new TwitterApi({
       appKey: keys.consumer.key,
       appSecret: keys.consumer.secret,
       accessToken: keys.account.key,
       accessSecret: keys.account.secret,
     });
+  }
+  /**
+   * tweet 情報を単体取得
+   * @param tweetId
+   */
+  async getTweet(tweetId: string) {
+    return await this.client.v2.tweets(tweetId);
   }
 
   /**
@@ -23,7 +30,9 @@ export class TwitterRepository {
    * @param mediaIds 画像メディア郡
    */
   async postTweet(content: string, mediaIds?: string[]) {
-    return this.client.v1.tweet(content, { media_ids: mediaIds });
+    return await this.client.v2.tweet(content, {
+      media: { media_ids: mediaIds },
+    });
   }
 
   /**
@@ -32,7 +41,7 @@ export class TwitterRepository {
    * @return {Promise<string>} メディアの id
    */
   async uploadMedia(file: TUploadableMedia) {
-    return this.client.v1.uploadMedia(file);
+    return await this.client.v1.uploadMedia(file);
   }
 
   /**
@@ -41,6 +50,6 @@ export class TwitterRepository {
    * @return {Promise}
    */
   async deleteTweet(tweetId: string) {
-    return this.client.v1.deleteTweet(tweetId);
+    return await this.client.v2.deleteTweet(tweetId);
   }
 }

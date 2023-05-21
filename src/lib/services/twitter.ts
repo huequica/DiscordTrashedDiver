@@ -28,8 +28,7 @@ export class TwitterService {
       return await this.repository
         .postTweet(content, mediaIds)
         .then(
-          (res) =>
-            `https://twitter.com/${res.user.screen_name}/status/${res.id_str}`
+          (res) => `https://twitter.com/leakFromSawada/status/${res.data.id}`
         );
     } catch (error: unknown) {
       // シンプルに疎通ができなかったなどのエラー
