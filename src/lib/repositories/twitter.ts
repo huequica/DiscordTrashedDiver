@@ -30,9 +30,17 @@ export class TwitterRepository {
    * @param mediaIds 画像メディア郡
    */
   async postTweet(content: string, mediaIds?: string[]) {
-    return await this.client.v2.tweet(content, {
-      media: { media_ids: mediaIds },
-    });
+    const requestParams: Parameters<typeof this.client.v2.tweet>[0] = {
+      text: content,
+    };
+
+    if (mediaIds) {
+      requestParams.media = {
+        media_ids: mediaIds,
+      };
+    }
+
+    return await this.client.v2.tweet(requestParams);
   }
 
   /**
