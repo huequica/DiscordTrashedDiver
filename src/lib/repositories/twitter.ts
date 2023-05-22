@@ -15,13 +15,6 @@ export class TwitterRepository {
       accessSecret: keys.account.secret,
     });
   }
-  /**
-   * tweet 情報を単体取得
-   * @param tweetId
-   */
-  async getTweet(tweetId: string) {
-    return await this.client.v2.tweets(tweetId);
-  }
 
   /**
    * テキストをツイートする
