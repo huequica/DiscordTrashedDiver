@@ -17,7 +17,7 @@ export const subscribeEvents = (client: Client): Client => {
   client.once('ready', (client) => {
     // キャッシュに入らないとイベントが発火しないのでテキストチャンネルを一旦取得
     const textChannels = client.channels.cache.filter(
-      (channel): channel is TextBasedChannel => channel.isText()
+      (channel): channel is TextBasedChannel => channel.isTextBased()
     );
 
     // その後直近100件のメッセージを fetch してキャッシュさせる

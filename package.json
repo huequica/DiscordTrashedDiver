@@ -8,16 +8,14 @@
   "scripts": {
     "build": "yarn typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
     "typeCheck": "tsc --noEmit",
-    "lint": "eslint --ext .js,.ts src",
-    "lint:fix": "prettier --write . && eslint --ext .js,.ts src --fix",
+    "lint": "eslint src/",
+    "lint:fix": "prettier --write . && eslint src --fix",
     "test": "jest"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
+    "@eslint/js": "^9.0.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
     "esbuild": "^0.20.2",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -26,7 +24,8 @@
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.6.0"
   },
   "dependencies": {
     "axios": "^1.6.8",

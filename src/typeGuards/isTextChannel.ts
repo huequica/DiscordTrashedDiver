@@ -1,4 +1,4 @@
-import { TextBasedChannel, TextChannel } from 'discord.js';
+import { ChannelType, TextBasedChannel, TextChannel } from 'discord.js';
 
 /**
  * `channel instanceof TextChannel` の wrapper
@@ -6,4 +6,4 @@ import { TextBasedChannel, TextChannel } from 'discord.js';
  */
 export const isTextChannel = (
   channel: TextBasedChannel
-): channel is TextChannel => channel.type === 'GUILD_TEXT';
+): channel is TextChannel => channel.type === ChannelType.GuildText;

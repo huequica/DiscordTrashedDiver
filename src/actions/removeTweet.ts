@@ -17,14 +17,14 @@ interface Services {
 export const removeTweet = async (
   reaction: MessageReaction,
   reactorUser: User,
-  services?: Services
+  services?: Services,
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = reaction.message.channel;
   if (!isTextChannel(channel)) return;
 
   const managerRole = reaction.message.guild?.roles.cache.get(
-    BOT_MANAGER_ROLE_ID()
+    BOT_MANAGER_ROLE_ID(),
   );
 
   if (!managerRole) {
@@ -33,7 +33,7 @@ export const removeTweet = async (
 
   const permission = {
     isOwner: (reaction.message.guild?.ownerId ?? '') === reactorUser.id,
-    isManager: Boolean(managerRole.members.get(reactorUser.id)) ?? false,
+    isManager: Boolean(managerRole.members.get(reactorUser.id)),
   };
 
   const filter: Parameters<typeof shouldRemoveTweet>[0] = {
@@ -57,21 +57,21 @@ export const removeTweet = async (
     await twitterService.deleteTweet(tweetId);
 
     await reaction.message.reply(
-      'ツイート削除したで. 念の為リンク踏んで確認してな'
+      'ツイート削除したで. 念の為リンク踏んで確認してな',
     );
   } catch (error: unknown) {
     if (error instanceof NetworkHandshakeException) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`
-        )
+          `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`,
+        ),
       );
       return;
     }
 
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`)
+        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`),
       );
       return;
     }
@@ -79,15 +79,15 @@ export const removeTweet = async (
     if (error instanceof ServerErrorException) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`
-        )
+          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`,
+        ),
       );
       return;
     }
 
     if (error instanceof Error) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`)
+        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`),
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
       await reaction.message.channel.send(errorMessage);
