@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Intents } from 'discord.js';
+import { GatewayIntentBits } from 'discord.js';
 
 export const DISCORD_TOKEN = (): string => {
   const env = process.env.DISCORD_TOKEN;
@@ -8,10 +8,10 @@ export const DISCORD_TOKEN = (): string => {
 };
 
 export const intents = [
-  Intents.FLAGS.GUILDS,
-  Intents.FLAGS.GUILD_MESSAGES,
-  Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-  Intents.FLAGS.GUILD_MESSAGE_TYPING,
+  GatewayIntentBits.Guilds,
+  GatewayIntentBits.GuildMessages,
+  GatewayIntentBits.GuildMessageReactions,
+  GatewayIntentBits.GuildMessageTyping,
 ];
 
 export const TWITTER_TOKENS = () => {
