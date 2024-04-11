@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
 import { TwitterRepository } from '@/lib/repositories/twitter';
 import { TWITTER_TOKENS } from '@/config/env';
@@ -28,7 +27,7 @@ export class TwitterService {
       return await this.repository
         .postTweet(content, mediaIds)
         .then(
-          (res) => `https://twitter.com/leakFromSawada/status/${res.data.id}`
+          (res) => `https://twitter.com/leakFromSawada/status/${res.data.id}`,
         );
     } catch (error: unknown) {
       // シンプルに疎通ができなかったなどのエラー
