@@ -10,10 +10,14 @@
   },
   "scripts": {
     "start": "node dist/index.js",
-    "build": "yarn typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
+    "build": "pnpm typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
     "typeCheck": "tsc --noEmit",
-    "lint": "eslint src/",
-    "lint:fix": "prettier --write . && eslint src --fix",
+    "lint": "biome lint src/",
+    "lint:fix": "pnpm lint --apply",
+    "format": "biome format src/",
+    "format:fix": "pnpm format --write",
+    "ci": "biome ci src/",
+    "quickFix": "biome check --apply src",
     "test": "jest"
   },
   "devDependencies": {
