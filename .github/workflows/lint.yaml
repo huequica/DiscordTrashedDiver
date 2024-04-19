@@ -22,12 +22,12 @@ jobs:
           node-version: '20.12.2'
 
       - uses: pnpm/action-setup@v3
-        with: 
+        with:
           version: latest
 
       - run: pnpm install --frozen-lockfile
 
       - uses: mongolyy/reviewdog-action-biome@v1
-          with:
-            github_token: ${{ secrets.github_token }}
-            reporter: github-pr-review
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review

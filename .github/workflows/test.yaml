@@ -22,7 +22,7 @@ jobs:
           node-version: '20.12.2'
 
       - uses: pnpm/action-setup@v3
-        with: 
+        with:
           version: latest
 
       - run: pnpm install --frozen-lockfile
