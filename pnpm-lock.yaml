@@ -27,6 +27,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.7.0
         version: 1.7.0
+      '@jest/types':
+        specifier: ^29.6.3
+        version: 29.6.3
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
