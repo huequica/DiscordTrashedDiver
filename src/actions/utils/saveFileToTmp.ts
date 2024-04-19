@@ -1,8 +1,8 @@
 import path from 'path';
 import { APPLICATION_TMP_DIRECTORY } from '@/config/env';
 import axios from 'axios';
-import makeDir from 'make-dir';
 import fs from 'fs/promises';
+import makeDir from 'make-dir';
 
 /**
  * URL 先のコンテンツ情報をファイルに保存する
@@ -25,7 +25,7 @@ export const saveToTmpFile = async (url: string): Promise<string> => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       new Buffer.from(content),
-      'binary'
+      'binary',
     );
 
     return `${tmpDirectory}/${fileName}`;

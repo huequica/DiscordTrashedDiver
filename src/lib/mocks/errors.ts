@@ -1,9 +1,9 @@
+import { ClientRequest, IncomingHttpHeaders, IncomingMessage } from 'http';
 import {
   ApiRequestError,
   ApiResponseError,
   TwitterApiErrorData,
 } from 'twitter-api-v2';
-import { ClientRequest, IncomingHttpHeaders, IncomingMessage } from 'http';
 
 export const mockTwitterApiRequestError = new ApiRequestError('mock error!', {
   request: {} as unknown as ClientRequest,

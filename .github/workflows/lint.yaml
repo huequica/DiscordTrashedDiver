@@ -23,10 +23,11 @@ jobs:
 
       - uses: pnpm/action-setup@v3
         with:
-          run_install:
-            - '--frozen-lockfile'
+          version: latest
 
-      - name: lint check
-        uses: reviewdog/action-eslint@v1
+      - run: pnpm install --frozen-lockfile
+
+      - uses: mongolyy/reviewdog-action-biome@v1
         with:
-          workdir: src
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review

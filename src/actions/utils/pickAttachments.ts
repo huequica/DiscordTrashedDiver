@@ -17,7 +17,7 @@ export type omittedAttachment = {
  * @see https://discord.js.org/#/docs/main/stable/class/MessageAttachment
  */
 export const pickAttachments = (
-  reaction: MessageReaction
+  reaction: MessageReaction,
 ): omittedAttachment[] => {
   return reaction.message.attachments
     .map((e) => ({

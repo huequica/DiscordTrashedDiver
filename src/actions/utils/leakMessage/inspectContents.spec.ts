@@ -10,7 +10,7 @@ describe('🚓 pullContents', () => {
   it('👮 アルファベットの文字列が長すぎる場合はエラーを throw する', () => {
     const tooLongContent: string[] = new Array(100).fill('mockMessage');
     expect(() => inspectContents(tooLongContent.join(' '))).toThrowError(
-      ContentsTooLongException
+      ContentsTooLongException,
     );
   });
 
@@ -23,7 +23,7 @@ describe('🚓 pullContents', () => {
     const tooLongContent: string[] = new Array(141).fill('あ');
 
     expect(() => inspectContents(tooLongContent.join(''))).toThrowError(
-      ContentsTooLongException
+      ContentsTooLongException,
     );
   });
 
@@ -36,7 +36,7 @@ describe('🚓 pullContents', () => {
     const tooLongContent: string[] = new Array(80).fill('🆖');
 
     expect(() => inspectContents(tooLongContent.join(''))).toThrowError(
-      ContentsTooLongException
+      ContentsTooLongException,
     );
   });
 });
