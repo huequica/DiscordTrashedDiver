@@ -10,9 +10,8 @@
 # require environment
 
 - node
-  - v16.13.0
-  - `nodenv` を使用して管理している場合は自動で設定されます( `.node-version` がそれを管理している)
-- yarn
+  - v20.12.0
+- yarn(2)
   - `v1.22.17` にて開発
 
 # get started
