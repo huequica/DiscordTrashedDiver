@@ -6,7 +6,7 @@ const mockGuildEmojis = (omitExpectEmoji: boolean): GuildEmoji[] => {
       ({
         name: `mockEmoji_${index}}`,
         toString: () => `:mockEmoji_${index}:`,
-      } as GuildEmoji)
+      }) as GuildEmoji,
   );
 
   // true なら正常例の絵文字オブジェクトも追加
@@ -41,7 +41,7 @@ export type GenerateMockMessageReactionOptions =
   Partial<MockMessageReactionOptions>;
 
 export const generateMockMessageReaction = (
-  options?: GenerateMockMessageReactionOptions
+  options?: GenerateMockMessageReactionOptions,
 ): MessageReaction => {
   const role = {
     members: {

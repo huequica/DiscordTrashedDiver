@@ -25,7 +25,7 @@ export const saveToTmpFile = async (url: string): Promise<string> => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       new Buffer.from(content),
-      'binary'
+      'binary',
     );
 
     return `${tmpDirectory}/${fileName}`;

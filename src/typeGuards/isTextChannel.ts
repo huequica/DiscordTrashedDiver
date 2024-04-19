@@ -5,5 +5,5 @@ import { ChannelType, TextBasedChannel, TextChannel } from 'discord.js';
  * @param channel 正体不明のチャンネルオブジェクト. `reaction.message.channel` から取る
  */
 export const isTextChannel = (
-  channel: TextBasedChannel
+  channel: TextBasedChannel,
 ): channel is TextChannel => channel.type === ChannelType.GuildText;

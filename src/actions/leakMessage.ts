@@ -20,7 +20,7 @@ interface Services {
 
 export const leakMessage = async (
   reaction: MessageReaction,
-  services?: Services
+  services?: Services,
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = reaction.message.channel;
@@ -40,7 +40,7 @@ export const leakMessage = async (
 
     // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
     const imageAttachments = pickAttachments(reaction).filter((attachment) =>
-      /image\/.*/.test(attachment.contentType)
+      /image\/.*/.test(attachment.contentType),
     );
 
     if (!messageContent && imageAttachments.length === 0) return;
@@ -57,7 +57,7 @@ export const leakMessage = async (
 
     const tweetResultURL = await twitterService.postTweet(
       messageContent,
-      mediaIds
+      mediaIds,
     );
 
     const emoji = pickEmoji(reaction.client, 'watching_you2');
@@ -68,7 +68,7 @@ export const leakMessage = async (
   } catch (error: unknown) {
     if (error instanceof ContentsTooLongException) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < この投稿長すぎなんだわ`)
+        buildNoMentionReply(`${reaction.emoji} < この投稿長すぎなんだわ`),
       );
       return;
     }
@@ -76,8 +76,8 @@ export const leakMessage = async (
     if (error instanceof EmojiNotFoundError) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`
-        )
+          `${reaction.emoji} < わりい、使おうとしたやつがないんだわ`,
+        ),
       );
       return;
     }
@@ -85,15 +85,15 @@ export const leakMessage = async (
     if (error instanceof NetworkHandshakeException) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`
-        )
+          `${reaction.emoji} < ネットワークの接続で問題が発生したぽいで`,
+        ),
       );
       return;
     }
 
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`)
+        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`),
       );
       return;
     }
@@ -101,15 +101,15 @@ export const leakMessage = async (
     if (error instanceof ServerErrorException) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`
-        )
+          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`,
+        ),
       );
       return;
     }
 
     if (error instanceof Error) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`)
+        buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`),
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
       await reaction.message.channel.send(errorMessage);

@@ -17,14 +17,14 @@ export const subscribeEvents = (client: Client): Client => {
   client.once('ready', (client) => {
     // キャッシュに入らないとイベントが発火しないのでテキストチャンネルを一旦取得
     const textChannels = client.channels.cache.filter(
-      (channel): channel is TextBasedChannel => channel.isTextBased()
+      (channel): channel is TextBasedChannel => channel.isTextBased(),
     );
 
     // その後直近100件のメッセージを fetch してキャッシュさせる
     textChannels.map(async (channel) =>
       channel instanceof TextChannel
         ? await channel.messages.fetch({ limit: 100 })
-        : Promise.resolve(undefined)
+        : Promise.resolve(undefined),
     );
 
     console.log('start discord bot service!');
