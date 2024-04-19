@@ -22,10 +22,8 @@ jobs:
           node-version: '20.12.2'
 
       - uses: pnpm/action-setup@v3
-        with:
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile]
+
+      - run: pnpm install --frozen-lockfile
 
       - uses: mongolyy/reviewdog-action-biome@v1
           with:
