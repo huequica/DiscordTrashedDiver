@@ -1,6 +1,6 @@
-import { Client } from 'discord.js';
-import { DISCORD_TOKEN, intents, TWITTER_TOKENS } from '@/config/env';
+import { DISCORD_TOKEN, TWITTER_TOKENS, intents } from '@/config/env';
 import { subscribeEvents } from '@/events';
+import { Client } from 'discord.js';
 
 const main = async (discordToken: string) => {
   const client = subscribeEvents(new Client({ intents }));
