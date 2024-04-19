@@ -21,8 +21,10 @@ jobs:
         with:
           node-version: '20.12.2'
 
-      - name: yarn install
-        run: yarn --frozen-lockfile
+      - uses: pnpm/action-setup@v3
+        with:
+          run_install:
+            - '--frozen-lockfile'
 
       - name: lint check
         uses: reviewdog/action-eslint@v1
