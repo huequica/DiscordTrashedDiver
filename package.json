@@ -9,6 +9,7 @@
     "node": "^20.12.0"
   },
   "scripts": {
+    "start": "node dist/index.js",
     "build": "yarn typeCheck && esbuild --bundle --outdir=dist --platform=node src/index.ts",
     "typeCheck": "tsc --noEmit",
     "lint": "eslint src/",
