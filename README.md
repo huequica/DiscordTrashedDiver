@@ -11,13 +11,34 @@
 
 - node
   - v20.12.0
-- yarn(2)
-  - `v1.22.17` にて開発
+- pnpm
+  - 9.0.4
 
 # get started
 
 1. `$ git clone https://github.com/huequica/DiscordTrashedDiver.git`
-2. `yarn` で依存を落としてくる
-3. `yarn build` で ビルドしたファイルが出来る
+2. `pnpm i --frozen-lockfile` で依存を落としてくる
+3. `pnpm build` で ビルドしたファイルが出来る
 4. `.env.template` をコピペして `.env` を作り、各種情報を追記する
-5. `node dist/index.js` で実行
+5. `pnpm start` で実行
+
+# running at systemd
+
+たぶんこれを `/etc/systemd/system/discord-trashed-diver.service` に作成すればいいんじゃないですかね
+
+```
+[Unit]
+Description=https://github.com/huequica/DiscordTrashedDiver
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/bin/bash -c "pnpm start"
+ExecStop=/bin/bash -c "kill $(systemctl show --property MainPID --value discord-trashed-diver)"
+WorkingDirectory=/root/DiscordTrashedDiver
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+```
