@@ -9,16 +9,16 @@ describe('🚓 pickTweetId', () => {
 
   it('👮 URL が twitter の形式と違う場合はエラーを返却', () => {
     const tweetURL = 'https://hoge.com/fuga/piyo';
-    expect(() => pickTweetId(tweetURL)).toThrowError(Error);
+    expect(() => pickTweetId(tweetURL)).toThrow(Error);
   });
 
   it('👮 URL の statusId の中に変な文字が混ざっていた場合はエラーを返却', () => {
     const tweetURL = 'https://twitter.com/hogeUser/status/fuga1234567890';
-    expect(() => pickTweetId(tweetURL)).toThrowError(Error);
+    expect(() => pickTweetId(tweetURL)).toThrow(Error);
   });
 
   it('👮 URL の末尾に変な文字が混ざっていた場合はエラーを返却', () => {
     const tweetURL = 'https://twitter.com/hogeUser/status/1234678901?s=1';
-    expect(() => pickTweetId(tweetURL)).toThrowError(Error);
+    expect(() => pickTweetId(tweetURL)).toThrow(Error);
   });
 });
