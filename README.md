@@ -24,7 +24,7 @@
 
 # running at systemd
 
-たぶんこう
+たぶんこれを `/etc/systemd/system/discord-trashed-diver.service` に作成すればいいんじゃないですかね
 
 ```
 [Unit]
