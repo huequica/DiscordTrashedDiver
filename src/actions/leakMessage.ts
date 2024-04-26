@@ -68,7 +68,7 @@ export const leakMessage = async (
     const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
     await reaction.message.reply(replyOptions);
 
-    Logger.debug('Succeed leak message.');
+    Logger.debug('Succeed leak message.', tweetResultURL);
   } catch (error: unknown) {
     Logger.debug('ERROR OCCURRED IN LEAK MESSAGE!', error);
 
