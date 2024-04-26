@@ -70,7 +70,7 @@ export const leakMessage = async (
 
     Logger.debug('Succeed leak message.', tweetResultURL);
   } catch (error: unknown) {
-    Logger.debug('ERROR OCCURRED IN LEAK MESSAGE!', error);
+    Logger.error('ERROR OCCURRED IN LEAK MESSAGE!', error);
 
     if (error instanceof ContentsTooLongException) {
       await reaction.message.reply(
