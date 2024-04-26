@@ -45,4 +45,8 @@ export const BOT_MANAGER_ROLE_ID = (): string => {
   return result;
 };
 
+export const IS_DEBUG_MODE = (): boolean => {
+  return process.env.IS_DEBUG_MODE === 'true';
+};
+
 export const APPLICATION_TMP_DIRECTORY = '/tmp/huequica/DiscordTrashedDiver';
