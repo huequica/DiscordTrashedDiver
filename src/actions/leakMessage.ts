@@ -10,6 +10,7 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
+import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
 import { MessageReaction } from 'discord.js';
@@ -33,6 +34,8 @@ export const leakMessage = async (
   };
 
   if (!shouldRunLeak(filters)) return;
+
+  Logger.debug('Start Leak Message...');
 
   try {
     const twitterService = services?.twitter || new TwitterService();
@@ -63,9 +66,12 @@ export const leakMessage = async (
     const emoji = pickEmoji(reaction.client, 'watching_you2');
 
     const replyOptions = buildNoMentionReply(`${emoji} ${tweetResultURL}`);
-
     await reaction.message.reply(replyOptions);
+
+    Logger.debug('Succeed leak message.');
   } catch (error: unknown) {
+    Logger.debug('ERROR OCCURRED IN LEAK MESSAGE!', error);
+
     if (error instanceof ContentsTooLongException) {
       await reaction.message.reply(
         buildNoMentionReply(`${reaction.emoji} < この投稿長すぎなんだわ`),
