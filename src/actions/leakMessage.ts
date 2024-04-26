@@ -39,7 +39,7 @@ export const leakMessage = async (
 
   try {
     const twitterService = services?.twitter || new TwitterService();
-    const messageContent = inspectContents(reaction.message.content || '');
+    const messageContent = inspectContents(reaction.message.content ?? '');
 
     // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
     const imageAttachments = pickAttachments(reaction).filter((attachment) =>
