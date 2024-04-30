@@ -19,7 +19,7 @@ jobs:
       - name: using node
         uses: actions/setup-node@v2
         with:
-          node-version: '20.12.2'
+          node-version: '18.20.2'
 
       - uses: pnpm/action-setup@v3
         with:

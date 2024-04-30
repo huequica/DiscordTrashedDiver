@@ -10,7 +10,7 @@
 # require environment
 
 - node
-  - v20.12.0
+  - v18.20.2s
 - pnpm
   - 9.0.4
 

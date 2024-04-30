@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": "^20.12.0"
+    "node": "^18.20.2"
   },
   "scripts": {
     "start": "node dist/index.js",
