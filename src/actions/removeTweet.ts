@@ -10,6 +10,7 @@ import {
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
 import { MessageReaction, User } from 'discord.js';
+
 interface Services {
   twitter: TwitterService;
 }
@@ -17,7 +18,7 @@ interface Services {
 export const removeTweet = async (
   reaction: MessageReaction,
   reactorUser: User,
-  services?: Services,
+  services: Services,
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = reaction.message.channel;
@@ -50,11 +51,10 @@ export const removeTweet = async (
   if (!shouldRemoveTweet(filter)) {
     return;
   }
-  const twitterService = services?.twitter || new TwitterService();
 
   try {
     const tweetId = pickTweetId(reaction.message.content || '');
-    await twitterService.deleteTweet(tweetId);
+    await services.twitter.deleteTweet(tweetId);
 
     await reaction.message.reply(
       'ツイート削除したで. 念の為リンク踏んで確認してな',
@@ -71,7 +71,9 @@ export const removeTweet = async (
 
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
-        buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`),
+        buildNoMentionReply(
+          `${reaction.emoji} < services.twitter. の認証で死んだんだわ`,
+        ),
       );
       return;
     }
@@ -79,7 +81,7 @@ export const removeTweet = async (
     if (error instanceof ServerErrorException) {
       await reaction.message.reply(
         buildNoMentionReply(
-          `${reaction.emoji} < Twitter のサービスが死んでるかもしれん`,
+          `${reaction.emoji} < services.twitter. のサービスが死んでるかもしれん`,
         ),
       );
       return;

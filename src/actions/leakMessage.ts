@@ -21,7 +21,7 @@ interface Services {
 
 export const leakMessage = async (
   reaction: MessageReaction,
-  services?: Services,
+  services: Services,
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = reaction.message.channel;
@@ -38,7 +38,6 @@ export const leakMessage = async (
   Logger.debug('Start Leak Message...');
 
   try {
-    const twitterService = services?.twitter || new TwitterService();
     const messageContent = inspectContents(reaction.message.content ?? '');
 
     // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
@@ -51,14 +50,16 @@ export const leakMessage = async (
     // 画像ファイルが1つ以上ある場合だけ Promise を生成、なければ undefined を返却
     const mediaIdPromises: Promise<string>[] | undefined =
       imageAttachments.length > 0
-        ? imageAttachments.map((image) => twitterService.uploadMedia(image.url))
+        ? imageAttachments.map((image) =>
+            services.twitter.uploadMedia(image.url),
+          )
         : undefined;
 
     const mediaIds: string[] | undefined = mediaIdPromises
       ? await Promise.all(mediaIdPromises)
       : undefined;
 
-    const tweetResultURL = await twitterService.postTweet(
+    const tweetResultURL = await services.twitter.postTweet(
       messageContent,
       mediaIds,
     );

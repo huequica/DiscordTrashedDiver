@@ -7,14 +7,19 @@ import {
   TextChannel,
   User,
 } from 'discord.js';
+import { TwitterService } from './lib/services/twitter';
 
 /**
  * イベントを登録していくための空間
- * @param client イベント登録前の Client オブジェクト
+ * @param discord イベント登録前の Client オブジェクト
+ * @param twitter twitter へ投稿するための TwitterService
  * @return client イベントを登録したものを返す
  */
-export const subscribeEvents = (client: Client): Client => {
-  client.once('ready', (client) => {
+export const subscribeEvents = (
+  discord: Client,
+  twitter: TwitterService,
+): Client => {
+  discord.once('ready', (client) => {
     // キャッシュに入らないとイベントが発火しないのでテキストチャンネルを一旦取得
     const textChannels = client.channels.cache.filter(
       (channel): channel is TextBasedChannel => channel.isTextBased(),
@@ -30,13 +35,13 @@ export const subscribeEvents = (client: Client): Client => {
     console.log('start discord bot service!');
   });
 
-  client.on('messageReactionAdd', (reaction, user) => {
+  discord.on('messageReactionAdd', (reaction, user) => {
     if (!(reaction instanceof MessageReaction)) return;
-    leakMessage(reaction);
+    leakMessage(reaction, { twitter });
 
     if (!(user instanceof User)) return;
-    removeTweet(reaction, user);
+    removeTweet(reaction, user, { twitter });
   });
 
-  return client;
+  return discord;
 };

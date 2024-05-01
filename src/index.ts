@@ -1,9 +1,13 @@
 import { DISCORD_TOKEN, TWITTER_TOKENS, intents } from '@/config/env';
 import { subscribeEvents } from '@/events';
 import { Client } from 'discord.js';
+import { TwitterService } from './lib/services/twitter';
 
 const main = async (discordToken: string) => {
-  const client = subscribeEvents(new Client({ intents }));
+  const discord = new Client({ intents });
+  const twitter = new TwitterService();
+
+  const client = subscribeEvents(discord, twitter);
 
   await client.login(discordToken);
 };
