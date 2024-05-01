@@ -37,10 +37,10 @@ export const subscribeEvents = (
 
   discord.on('messageReactionAdd', (reaction, user) => {
     if (!(reaction instanceof MessageReaction)) return;
-    leakMessage(reaction, twitter);
+    leakMessage(reaction, { twitter });
 
     if (!(user instanceof User)) return;
-    removeTweet(reaction, user, twitter);
+    removeTweet(reaction, user, { twitter });
   });
 
   return discord;
