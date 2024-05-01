@@ -18,4 +18,4 @@
 
 - [ ] ちゃんとテストを書きましたか？
 - [ ] linter の警告はありませんか？
-- [ ] `yarn lint:fix` でコードフォーマットを修正しましたか？
+- [ ] `pnpm run lint:fix && pnpm run format:fix` でコードフォーマットを修正しましたか？
