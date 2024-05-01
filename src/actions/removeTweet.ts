@@ -10,14 +10,11 @@ import {
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
 import { MessageReaction, User } from 'discord.js';
-interface Services {
-  twitter: TwitterService;
-}
 
 export const removeTweet = async (
   reaction: MessageReaction,
   reactorUser: User,
-  services?: Services,
+  twitter: TwitterService,
 ) => {
   // 原則として来ることはないがコンパイラを黙らせる意味で書いている
   const channel = reaction.message.channel;
@@ -50,11 +47,10 @@ export const removeTweet = async (
   if (!shouldRemoveTweet(filter)) {
     return;
   }
-  const twitterService = services?.twitter || new TwitterService();
 
   try {
     const tweetId = pickTweetId(reaction.message.content || '');
-    await twitterService.deleteTweet(tweetId);
+    await twitter.deleteTweet(tweetId);
 
     await reaction.message.reply(
       'ツイート削除したで. 念の為リンク踏んで確認してな',
