@@ -10,6 +10,7 @@ import {
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
+import { DuplicatedException } from '@/lib/exceptions/duplicated';
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
@@ -101,6 +102,13 @@ export const leakMessage = async (
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
         buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`),
+      );
+      return;
+    }
+
+    if (error instanceof DuplicatedException) {
+      await reaction.message.reply(
+        buildNoMentionReply(`${reaction.emoji} < 同じツイートしてるんだわ`),
       );
       return;
     }

@@ -8,6 +8,7 @@ import {
 import { TwitterRepository } from '@/lib/repositories/twitter';
 import fs from 'fs/promises';
 import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
+import { DuplicatedException } from '../exceptions/duplicated';
 
 export class TwitterService {
   private repository: TwitterRepository;
@@ -40,6 +41,8 @@ export class TwitterService {
         switch (error.code) {
           case 401:
             throw new UnauthorizedException();
+          case 403:
+            throw new DuplicatedException();
           case 500:
             throw new ServerErrorException();
         }
