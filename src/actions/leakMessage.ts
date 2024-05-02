@@ -5,6 +5,7 @@ import { pickAttachments } from '@/actions/utils/pickAttachments';
 import { pickEmoji } from '@/actions/utils/pickEmoji';
 import {
   ContentsTooLongException,
+  DuplicatedException,
   EmojiNotFoundError,
   NetworkHandshakeException,
   ServerErrorException,
@@ -101,6 +102,13 @@ export const leakMessage = async (
     if (error instanceof UnauthorizedException) {
       await reaction.message.reply(
         buildNoMentionReply(`${reaction.emoji} < twitter の認証で死んだんだわ`),
+      );
+      return;
+    }
+
+    if (error instanceof DuplicatedException) {
+      await reaction.message.reply(
+        buildNoMentionReply(`${reaction.emoji} < 同じツイートしてるんだわ`),
       );
       return;
     }

@@ -1,6 +1,7 @@
 import { saveToTmpFile } from '@/actions/utils/saveFileToTmp';
 import { TWITTER_TOKENS } from '@/config/env';
 import {
+  DuplicatedException,
   NetworkHandshakeException,
   ServerErrorException,
   UnauthorizedException,
@@ -40,6 +41,8 @@ export class TwitterService {
         switch (error.code) {
           case 401:
             throw new UnauthorizedException();
+          case 403:
+            throw new DuplicatedException();
           case 500:
             throw new ServerErrorException();
         }
