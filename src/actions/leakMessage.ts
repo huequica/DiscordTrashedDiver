@@ -5,12 +5,12 @@ import { pickAttachments } from '@/actions/utils/pickAttachments';
 import { pickEmoji } from '@/actions/utils/pickEmoji';
 import {
   ContentsTooLongException,
+  DuplicatedException,
   EmojiNotFoundError,
   NetworkHandshakeException,
   ServerErrorException,
   UnauthorizedException,
 } from '@/lib/exceptions';
-import { DuplicatedException } from '@/lib/exceptions/duplicated';
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
