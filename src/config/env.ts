@@ -12,6 +12,7 @@ export const intents = [
   GatewayIntentBits.GuildMessages,
   GatewayIntentBits.GuildMessageReactions,
   GatewayIntentBits.GuildMessageTyping,
+  GatewayIntentBits.MessageContent,
 ];
 
 export const TWITTER_TOKENS = () => {
