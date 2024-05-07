@@ -39,12 +39,19 @@ export const leakMessage = async (
   Logger.debug('Start Leak Message...');
 
   try {
+    Logger.debug(
+      'reaction.message.content',
+      typeof reaction.message.content,
+      reaction.message.content,
+    );
     const messageContent = inspectContents(reaction.message.content ?? '');
 
     // 4つまでファイルの情報を絞ってから更に contentType が `image/*` の物だけ取得
     const imageAttachments = pickAttachments(reaction).filter((attachment) =>
       /image\/.*/.test(attachment.contentType),
     );
+
+    Logger.debug('imageAttachments', imageAttachments);
 
     if (!messageContent && imageAttachments.length === 0) return;
 
