@@ -1,5 +1,4 @@
 import { GatewayIntentBits } from 'discord.js';
-import 'dotenv/config';
 
 export const DISCORD_TOKEN = (): string => {
   const env = process.env.DISCORD_TOKEN;
