@@ -10,9 +10,9 @@
 # require environment
 
 - node
-  - v18.20.2s
+  - v24.12.0
 - pnpm
-  - 9.0.4
+  - 10.27.0
 
 # get started
 
