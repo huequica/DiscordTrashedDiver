@@ -1,3 +1,5 @@
+import fs from 'fs/promises';
+import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
 import { saveToTmpFile } from '@/actions/utils/saveFileToTmp';
 import { TWITTER_TOKENS } from '@/config/env';
 import {
@@ -7,8 +9,6 @@ import {
   UnauthorizedException,
 } from '@/lib/exceptions';
 import { TwitterRepository } from '@/lib/repositories/twitter';
-import fs from 'fs/promises';
-import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
 
 export class TwitterService {
   private repository: TwitterRepository;

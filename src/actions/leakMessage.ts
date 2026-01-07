@@ -1,3 +1,4 @@
+import { MessageReaction } from 'discord.js';
 import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 import { inspectContents } from '@/actions/utils/leakMessage/inspectContents';
 import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
@@ -14,7 +15,6 @@ import {
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
-import { MessageReaction } from 'discord.js';
 
 interface Services {
   twitter: TwitterService;
