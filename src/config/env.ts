@@ -2,7 +2,9 @@ import { GatewayIntentBits } from 'discord.js';
 
 export const DISCORD_TOKEN = (): string => {
   const env = process.env.DISCORD_TOKEN;
-  if (!env) throw Error('DISCORD_TOKEN not found in .env File!');
+  if (!env) {
+    throw new Error('DISCORD_TOKEN not found in .env File!');
+  }
   return env;
 };
 
@@ -20,10 +22,11 @@ export const TWITTER_TOKENS = () => {
     process.env.TWITTER_API_SECRET,
     process.env.TWITTER_ACCOUNT_TOKEN,
     process.env.TWITTER_ACCOUNT_SECRET,
-  ].filter((key): key is string => typeof key === 'string');
+  ].filter((key): key is string => !!key);
 
-  if (keys.length !== 4)
-    throw Error('Caught undefined in twitter info from .env file!');
+  if (keys.length !== 4) {
+    throw new Error('Caught undefined in twitter info from .env file!');
+  }
 
   return {
     consumer: {
