@@ -1,6 +1,6 @@
 import axios from 'axios';
 import fs from 'fs/promises';
-import makeDir from 'make-dir';
+import { makeDirectory } from 'make-dir';
 import path from 'path';
 import { APPLICATION_TMP_DIRECTORY } from '@/config/env';
 
@@ -17,7 +17,7 @@ export const saveToTmpFile = async (url: string): Promise<string> => {
     const content = await axios
       .get<ArrayBuffer>(url, { responseType: 'arraybuffer' })
       .then((res) => res.data);
-    await makeDir(tmpDirectory);
+    await makeDirectory(tmpDirectory);
 
     // どうにも自分の知見ではつらそうだった, ゆるしてほしい
     await fs.writeFile(
