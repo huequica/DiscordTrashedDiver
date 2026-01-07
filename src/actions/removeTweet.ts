@@ -92,7 +92,10 @@ export const removeTweet = async (
         buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`),
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
-      await reaction.message.channel.send(errorMessage);
+      if (reaction.message.channel.isSendable()) {
+        reaction.message.channel.send(errorMessage);
+      }
+      // TODO: なんかしらの理由で発言ができない場合どうするかを実装
       return;
     }
   }
