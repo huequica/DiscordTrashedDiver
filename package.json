@@ -17,7 +17,7 @@
     "format": "biome format src/",
     "format:fix": "pnpm format --write",
     "ci": "biome ci src/",
-    "quickFix": "biome check --apply src",
+    "quickFix": "biome check -- --apply src",
     "test": "jest"
   },
   "devDependencies": {
