@@ -1,5 +1,6 @@
 import { TUploadableMedia, TwitterApi } from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
+import { MediaIds } from '@/lib/utils/twitter/isMediaIds';
 
 /**
  * Twitter への投稿を管轄する repository
@@ -20,9 +21,9 @@ export class TwitterRepository {
    * テキストをツイートする
    * WIP: 画像などのメディアを添付する(repository 設計もまだ)
    * @param content ツイート文面
-   * @param mediaIds 画像メディア郡
+   * @param mediaIds 画像メディア郡 **4つまでの mediaId の tuple**
    */
-  async postTweet(content: string, mediaIds?: string[]) {
+  async postTweet(content: string, mediaIds?: MediaIds) {
     const requestParams: Parameters<typeof this.client.v2.tweet>[0] = {
       text: content,
     };

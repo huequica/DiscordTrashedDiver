@@ -14,6 +14,7 @@ import {
 } from '@/lib/exceptions';
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
+import { isMediaIds } from '@/lib/utils/twitter/isMediaIds';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
 
 interface Services {
@@ -66,6 +67,10 @@ export const leakMessage = async (
     const mediaIds: string[] | undefined = mediaIdPromises
       ? await Promise.all(mediaIdPromises)
       : undefined;
+    if (!!mediaIds && !isMediaIds(mediaIds)) {
+      Logger.error(`Cannot fit mediaIds! Length: ${mediaIds.length}`);
+      return;
+    }
 
     const tweetResultURL = await services.twitter.postTweet(
       messageContent,

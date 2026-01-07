@@ -23,7 +23,10 @@ export class TwitterService {
    * @param mediaIds 画像郡
    * @return {Promise<string>} ツイートのリンク
    */
-  async postTweet(content: string, mediaIds?: string[]): Promise<string> {
+  async postTweet(
+    content: string,
+    mediaIds?: Parameters<typeof this.repository.postTweet>[1],
+  ): Promise<string> {
     try {
       return await this.repository
         .postTweet(content, mediaIds)
