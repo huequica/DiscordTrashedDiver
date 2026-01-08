@@ -1,6 +1,6 @@
 import { TUploadableMedia, TwitterApi } from 'twitter-api-v2';
 import { TWITTER_TOKENS } from '@/config/env';
-import { MediaIds } from '@/lib/utils/twitter/isMediaIds';
+import { MediaIds } from '../services/twitter/isMediaIds';
 
 /**
  * Twitter への投稿を管轄する repository

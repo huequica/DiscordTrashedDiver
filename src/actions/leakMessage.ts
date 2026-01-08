@@ -14,7 +14,6 @@ import {
 } from '@/lib/exceptions';
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
-import { isMediaIds } from '@/lib/utils/twitter/isMediaIds';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
 
 interface Services {
@@ -67,10 +66,6 @@ export const leakMessage = async (
     const mediaIds: string[] | undefined = mediaIdPromises
       ? await Promise.all(mediaIdPromises)
       : undefined;
-    if (!!mediaIds && !isMediaIds(mediaIds)) {
-      Logger.error(`Cannot fit mediaIds! Length: ${mediaIds.length}`);
-      return;
-    }
 
     const tweetResultURL = await services.twitter.postTweet(
       messageContent,
@@ -141,8 +136,10 @@ export const leakMessage = async (
       const errorMessage = '```\n' + `${error.message}\n` + '```';
       if (reaction.message.channel.isSendable()) {
         reaction.message.channel.send(errorMessage);
+        return;
       }
-      // TODO: なんかしらの理由で発言ができない場合どうするかを実装
+
+      Logger.error('CANNOT SEND MESSAGE TO REACTION CHANNEL!');
       return;
     }
   } finally {

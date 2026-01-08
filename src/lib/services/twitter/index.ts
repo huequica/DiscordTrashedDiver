@@ -9,6 +9,8 @@ import {
   UnauthorizedException,
 } from '@/lib/exceptions';
 import { TwitterRepository } from '@/lib/repositories/twitter';
+import { Logger } from '@/lib/services/logger';
+import { isMediaIds } from '@/lib/services/twitter/isMediaIds';
 
 export class TwitterService {
   private repository: TwitterRepository;
@@ -23,10 +25,12 @@ export class TwitterService {
    * @param mediaIds 画像郡
    * @return {Promise<string>} ツイートのリンク
    */
-  async postTweet(
-    content: string,
-    mediaIds?: Parameters<typeof this.repository.postTweet>[1],
-  ): Promise<string> {
+  async postTweet(content: string, mediaIds?: string[]): Promise<string> {
+    if (!!mediaIds && !isMediaIds(mediaIds)) {
+      Logger.error(`Cannot fit mediaIds! Length: ${mediaIds.length}`);
+      throw new Error('CANNOT FIT MediaIds!');
+    }
+
     try {
       return await this.repository
         .postTweet(content, mediaIds)
