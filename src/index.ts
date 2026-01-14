@@ -1,6 +1,6 @@
-import { DISCORD_TOKEN, TWITTER_TOKENS, intents } from '@/config/env';
-import { subscribeEvents } from '@/events';
 import { Client } from 'discord.js';
+import { DISCORD_TOKEN, intents, TWITTER_TOKENS } from '@/config/env';
+import { subscribeEvents } from '@/events';
 import { TwitterService } from './lib/services/twitter';
 
 const main = async (discordToken: string) => {

@@ -1,5 +1,3 @@
-import { leakMessage } from '@/actions/leakMessage';
-import { removeTweet } from '@/actions/removeTweet';
 import {
   Client,
   MessageReaction,
@@ -7,6 +5,8 @@ import {
   TextChannel,
   User,
 } from 'discord.js';
+import { leakMessage } from '@/actions/leakMessage';
+import { removeTweet } from '@/actions/removeTweet';
 import { TwitterService } from './lib/services/twitter';
 
 /**

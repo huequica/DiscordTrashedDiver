@@ -1,3 +1,4 @@
+import { MessageReaction, User } from 'discord.js';
 import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 import { pickTweetId } from '@/actions/utils/removeTweet/pickTweetId';
 import { shouldRemoveTweet } from '@/actions/utils/removeTweet/shouldRemoveTweet';
@@ -9,7 +10,6 @@ import {
 } from '@/lib/exceptions';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
-import { MessageReaction, User } from 'discord.js';
 
 interface Services {
   twitter: TwitterService;
@@ -92,8 +92,9 @@ export const removeTweet = async (
         buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`),
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
-      await reaction.message.channel.send(errorMessage);
-      return;
+      if (reaction.message.channel.isSendable()) {
+        reaction.message.channel.send(errorMessage);
+      }
     }
   }
 };

@@ -100,7 +100,7 @@ export class TwitterRepository {
   - 非同期が解決されたタイミングでのエラーを catch するためです。
 
 ```ts
-// @/lib/services/twitter.ts
+// @/lib/services/twitter/index.ts
 
 export class TwitterService {
   private repository: TwitterRepository;

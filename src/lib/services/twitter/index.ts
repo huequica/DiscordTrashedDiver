@@ -1,3 +1,5 @@
+import fs from 'fs/promises';
+import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
 import { saveToTmpFile } from '@/actions/utils/saveFileToTmp';
 import { TWITTER_TOKENS } from '@/config/env';
 import {
@@ -7,8 +9,7 @@ import {
   UnauthorizedException,
 } from '@/lib/exceptions';
 import { TwitterRepository } from '@/lib/repositories/twitter';
-import fs from 'fs/promises';
-import { ApiRequestError, ApiResponseError } from 'twitter-api-v2';
+import { isMediaIds } from '@/lib/services/twitter/isMediaIds';
 
 export class TwitterService {
   private repository: TwitterRepository;
@@ -24,6 +25,15 @@ export class TwitterService {
    * @return {Promise<string>} ツイートのリンク
    */
   async postTweet(content: string, mediaIds?: string[]): Promise<string> {
+    if (!!mediaIds && !isMediaIds(mediaIds)) {
+      // TODO: エラーを独自定義するとか reason をどっかにまとめて定義したい
+      throw new Error(`Cannot fit mediaIds! Length: ${mediaIds.length}`, {
+        cause: {
+          reason: 'NotExpectedMediaIds',
+        },
+      });
+    }
+
     try {
       return await this.repository
         .postTweet(content, mediaIds)

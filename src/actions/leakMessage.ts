@@ -1,3 +1,4 @@
+import { MessageReaction } from 'discord.js';
 import { buildNoMentionReply } from '@/actions/utils/buildNoMentionReply';
 import { inspectContents } from '@/actions/utils/leakMessage/inspectContents';
 import { shouldRunLeak } from '@/actions/utils/leakMessage/shouldRunLeak';
@@ -14,7 +15,6 @@ import {
 import { Logger } from '@/lib/services/logger';
 import { TwitterService } from '@/lib/services/twitter';
 import { isTextChannel } from '@/typeGuards/isTextChannel';
-import { MessageReaction } from 'discord.js';
 
 interface Services {
   twitter: TwitterService;
@@ -134,11 +134,15 @@ export const leakMessage = async (
         buildNoMentionReply(`${reaction.emoji} < なんか知らんエラーが出たわ`),
       );
       const errorMessage = '```\n' + `${error.message}\n` + '```';
-      await reaction.message.channel.send(errorMessage);
+      if (reaction.message.channel.isSendable()) {
+        reaction.message.channel.send(errorMessage);
+        return;
+      }
+
+      Logger.error('CANNOT SEND MESSAGE TO REACTION CHANNEL!');
       return;
     }
   } finally {
-    // ついた絵文字が消される
     await reaction.remove();
   }
 };
