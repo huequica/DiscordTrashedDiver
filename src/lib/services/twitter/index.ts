@@ -9,7 +9,6 @@ import {
   UnauthorizedException,
 } from '@/lib/exceptions';
 import { TwitterRepository } from '@/lib/repositories/twitter';
-import { Logger } from '@/lib/services/logger';
 import { isMediaIds } from '@/lib/services/twitter/isMediaIds';
 
 export class TwitterService {
@@ -27,8 +26,12 @@ export class TwitterService {
    */
   async postTweet(content: string, mediaIds?: string[]): Promise<string> {
     if (!!mediaIds && !isMediaIds(mediaIds)) {
-      Logger.error(`Cannot fit mediaIds! Length: ${mediaIds.length}`);
-      throw new Error('CANNOT FIT MediaIds!');
+      // TODO: エラーを独自定義するとか reason をどっかにまとめて定義したい
+      throw new Error(`Cannot fit mediaIds! Length: ${mediaIds.length}`, {
+        cause: {
+          reason: 'NotExpectedMediaIds',
+        },
+      });
     }
 
     try {

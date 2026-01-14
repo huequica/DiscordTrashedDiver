@@ -95,8 +95,6 @@ export const removeTweet = async (
       if (reaction.message.channel.isSendable()) {
         reaction.message.channel.send(errorMessage);
       }
-      // TODO: なんかしらの理由で発言ができない場合どうするかを実装
-      return;
     }
   }
 };
